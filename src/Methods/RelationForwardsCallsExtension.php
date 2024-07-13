@@ -15,19 +15,21 @@ use PHPStan\Reflection\MissingMethodFromReflectionException;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\ShouldNotHappenException;
-use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\ThisType;
 
 use function array_key_exists;
-use function array_values;
 
 final class RelationForwardsCallsExtension implements MethodsClassReflectionExtension
 {
     /** @var array<string, MethodReflection> */
     private array $cache = [];
 
-    public function __construct(private BuilderHelper $builderHelper, private ReflectionProvider $reflectionProvider, private EloquentBuilderForwardsCallsExtension $eloquentBuilderForwardsCallsExtension)
-    {
+    public function __construct(
+        private BuilderHelper $builderHelper,
+        private ReflectionProvider $reflectionProvider,
+        private EloquentBuilderForwardsCallsExtension $eloquentBuilderForwardsCallsExtension,
+    ) {
     }
 
     public function hasMethod(ClassReflection $classReflection, string $methodName): bool
@@ -92,10 +94,7 @@ final class RelationForwardsCallsExtension implements MethodsClassReflectionExte
         $returnType         = $parametersAcceptor->getReturnType();
 
         if ((new ObjectType(Builder::class))->isSuperTypeOf($returnType)->yes()) {
-            $returnType = new GenericObjectType(
-                $classReflection->getName(),
-                array_values($classReflection->getActiveTemplateTypeMap()->getTypes()),
-            );
+            $returnType = new ThisType($classReflection);
         }
 
         return new EloquentBuilderMethodReflection(
