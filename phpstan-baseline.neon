@@ -31,11 +31,6 @@ parameters:
 			path: src/Properties/ModelPropertyHelper.php
 
 		-
-			message: "#^PHPDoc tag @var assumes the expression with type PHPStan\\\\Type\\\\Type\\|null is always PHPStan\\\\Type\\\\ObjectType but it's error\\-prone and dangerous\\.$#"
-			count: 1
-			path: src/ReturnTypes/RelationCollectionExtension.php
-
-		-
 			message: "#^Doing instanceof PHPStan\\\\Type\\\\Generic\\\\GenericObjectType is error\\-prone and deprecated\\.$#"
 			count: 2
 			path: src/Rules/ModelRuleHelper.php
