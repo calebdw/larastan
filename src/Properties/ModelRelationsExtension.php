@@ -20,13 +20,13 @@ use Larastan\Larastan\Support\CollectionHelper;
 use Larastan\Larastan\Types\RelationParserHelper;
 use PHPStan\Analyser\OutOfClassScope;
 use PHPStan\Reflection\ClassReflection;
+use PHPStan\Reflection\ExtendedMethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\IntegerRangeType;
 use PHPStan\Type\IntersectionType;
-use PHPStan\Type\MixedType;
 use PHPStan\Type\NeverType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
@@ -36,14 +36,17 @@ use PHPStan\Type\TypeTraverser;
 use PHPStan\Type\UnionType;
 
 use function str_ends_with;
+use function version_compare;
 
 /** @internal */
 final class ModelRelationsExtension implements PropertiesClassReflectionExtension
 {
     use Concerns\HasContainer;
 
-    public function __construct(private RelationParserHelper $relationParserHelper, private CollectionHelper $collectionHelper)
-    {
+    public function __construct(
+        private RelationParserHelper $relationParserHelper,
+        private CollectionHelper $collectionHelper,
+    ) {
     }
 
     public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
@@ -65,9 +68,7 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
         }
 
         foreach ($methodNames as $methodName) {
-            $hasNativeMethod = $classReflection->hasNativeMethod($methodName);
-
-            if (! $hasNativeMethod) {
+            if (! $classReflection->hasNativeMethod($methodName)) {
                 continue;
             }
 
@@ -87,8 +88,45 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
             return new ModelProperty($classReflection, IntegerRangeType::createAllGreaterThanOrEqualTo(0), new NeverType(), false);
         }
 
-        $method = $classReflection->getMethod($propertyName, new OutOfClassScope());
+        $methodReflection = $classReflection->getMethod($propertyName, new OutOfClassScope());
 
+        // @phpstan-ignore-next-line
+        if (version_compare(LARAVEL_VERSION, '11.0.0', '<')) {
+            $relationType = $this->getRelationTypeBeforeL11($methodReflection);
+        } else {
+            $returnType = ParametersAcceptorSelector::selectSingle($methodReflection->getVariants())->getReturnType();
+
+            $relationType = TypeTraverser::map($returnType, function (Type $type, callable $traverse) use ($methodReflection): Type {
+                if ($type instanceof UnionType || $type instanceof IntersectionType) {
+                    return $traverse($type);
+                }
+
+                if (! (new ObjectType(Relation::class))->isSuperTypeOf($type)->yes()) {
+                    return $type;
+                }
+
+                $related = $type->getTemplateType(Relation::class, 'TRelatedModel');
+
+                // generics not provided, need to new up a Relation with the correct
+                // TRelatedModel type so the TResult will populate correctly
+                if ($related->getObjectClassNames()[0] === Model::class) {
+                    $modelName = $this->relationParserHelper->findModelsInRelationMethod($methodReflection)[0] ?? Model::class;
+
+                    $type = new GenericObjectType($type->getObjectClassNames()[0], [new ObjectType($modelName)]);
+                }
+
+                // @phpstan-ignore phpstanApi.getTemplateType
+                return $type->getTemplateType(Relation::class, 'TResult');
+            });
+
+            $relationType = $this->collectionHelper->replaceCollectionsInType($relationType);
+        }
+
+        return new ModelProperty($classReflection, $relationType, new NeverType(), false);
+    }
+
+    private function getRelationTypeBeforeL11(ExtendedMethodReflection $method): Type
+    {
         $returnType = ParametersAcceptorSelector::selectSingle($method->getVariants())->getReturnType();
 
         if ($returnType instanceof GenericObjectType) { // @phpstan-ignore-line This is a special shortcut we take
@@ -105,7 +143,7 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
             $relatedModelClassNames = [$modelName];
         }
 
-        $relationType = TypeTraverser::map($returnType, function (Type $type, callable $traverse) use ($relatedModelClassNames, $relatedModel) {
+        return TypeTraverser::map($returnType, function (Type $type, callable $traverse) use ($relatedModelClassNames, $relatedModel) {
             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                 return $traverse($type);
             }
@@ -147,9 +185,8 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
                 || Str::endsWith($type->getObjectClassNames()[0], 'MorphTo') // fallback
             ) {
                 // There was no generic type, or it was just Model
-                // so we will return mixed to avoid errors.
                 if ($relatedModel->getObjectClassNames()[0] === Model::class) {
-                    return new MixedType();
+                    return TypeCombinator::addNull($relatedModel);
                 }
 
                 $types = [];
@@ -159,7 +196,7 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
                 }
 
                 if ($types !== []) {
-                    return TypeCombinator::union(...$types);
+                    return TypeCombinator::addNull(TypeCombinator::union(...$types));
                 }
             }
 
@@ -168,7 +205,5 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
                 new NullType(),
             ]);
         });
-
-        return new ModelProperty($classReflection, $relationType, new NeverType(), false);
     }
 }

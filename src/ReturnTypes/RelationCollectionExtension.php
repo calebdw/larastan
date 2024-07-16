@@ -15,13 +15,8 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
-use PHPStan\Type\IntersectionType;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\TypeTraverser;
-use PHPStan\Type\UnionType;
 
-use function assert;
 use function in_array;
 
 /** @internal */
@@ -62,31 +57,12 @@ final class RelationCollectionExtension implements DynamicMethodReturnTypeExtens
         MethodCall $methodCall,
         Scope $scope,
     ): Type {
-        $modelType = $methodReflection->getDeclaringClass()->getActiveTemplateTypeMap()->getType('TRelatedModel');
-        assert($modelType !== null);
-
         $returnType = ParametersAcceptorSelector::selectFromArgs(
             $scope,
             $methodCall->getArgs(),
             $methodReflection->getVariants(),
         )->getReturnType();
 
-        if (! in_array(Collection::class, $returnType->getReferencedClasses(), true)) {
-            return $returnType;
-        }
-
-        $collection = $this->collectionHelper->determineCollectionClass($modelType->getObjectClassNames()[0]);
-
-        return TypeTraverser::map($returnType, static function ($type, $traverse) use ($collection): Type {
-            if ($type instanceof UnionType || $type instanceof IntersectionType) {
-                return $traverse($type);
-            }
-
-            if ((new ObjectType(Collection::class))->isSuperTypeOf($type)->yes()) {
-                return $collection;
-            }
-
-            return $traverse($type);
-        });
+        return $this->collectionHelper->replaceCollectionsInType($returnType);
     }
 }
