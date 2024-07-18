@@ -90,7 +90,6 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
 
         $methodReflection = $classReflection->getMethod($propertyName, new OutOfClassScope());
 
-        // @phpstan-ignore-next-line
         if (version_compare(LARAVEL_VERSION, '11.0.0', '<')) {
             $relationType = $this->getRelationTypeBeforeL11($methodReflection);
         } else {
@@ -115,7 +114,7 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
                     $type = new GenericObjectType($type->getObjectClassNames()[0], [new ObjectType($modelName)]);
                 }
 
-                // @phpstan-ignore phpstanApi.getTemplateType
+                /** @phpstan-ignore phpstanApi.getTemplateType (non-existent template on < L11) */
                 return $type->getTemplateType(Relation::class, 'TResult');
             });
 
@@ -129,7 +128,8 @@ final class ModelRelationsExtension implements PropertiesClassReflectionExtensio
     {
         $returnType = ParametersAcceptorSelector::selectSingle($method->getVariants())->getReturnType();
 
-        if ($returnType instanceof GenericObjectType) { // @phpstan-ignore-line This is a special shortcut we take
+        /** @phpstan-ignore phpstanApi.instanceofType (deprecated, special shortcut we take) */
+        if ($returnType instanceof GenericObjectType) {
             $relatedModel = $returnType->getTypes()[0];
 
             if ($relatedModel->getObjectClassNames() === []) {
