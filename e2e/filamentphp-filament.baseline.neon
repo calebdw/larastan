@@ -11,6 +11,26 @@ parameters:
 			path: ../../e2e/packages/actions/src/Commands/MakeImporterCommand.php
 
 		-
+			message: "#^Parameter \\#1 \\$related of method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:belongsTo\\(\\) expects class\\-string\\<Illuminate\\\\Database\\\\Eloquent\\\\Model\\>, string given\\.$#"
+			count: 1
+			path: ../../e2e/packages/actions/src/Exports/Models/Export.php
+
+		-
+			message: "#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:belongsTo\\(\\)$#"
+			count: 2
+			path: ../../e2e/packages/actions/src/Exports/Models/Export.php
+
+		-
+			message: "#^Parameter \\#1 \\$related of method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:belongsTo\\(\\) expects class\\-string\\<Illuminate\\\\Database\\\\Eloquent\\\\Model\\>, string given\\.$#"
+			count: 1
+			path: ../../e2e/packages/actions/src/Imports/Models/Import.php
+
+		-
+			message: "#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:belongsTo\\(\\)$#"
+			count: 2
+			path: ../../e2e/packages/actions/src/Imports/Models/Import.php
+
+		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: ../../e2e/packages/forms/src/Commands/MakeFormCommand.php

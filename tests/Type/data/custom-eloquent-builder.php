@@ -96,16 +96,16 @@ class ModelWithCustomBuilder extends Model
 }
 
 /**
- * @template TModelClass of ModelWithCustomBuilder
+ * @template TModel of ModelWithCustomBuilder
  *
- * @extends Builder<ModelWithCustomBuilder>
+ * @extends Builder<TModel>
  */
 class CustomEloquentBuilder extends Builder
 {
     /** @phpstan-return CustomEloquentBuilder<ModelWithCustomBuilder> */
     public function category(string $category): CustomEloquentBuilder
     {
-        assertType('static(CustomEloquentBuilder\CustomEloquentBuilder<TModelClass of CustomEloquentBuilder\ModelWithCustomBuilder (class CustomEloquentBuilder\CustomEloquentBuilder, argument)>)', $this->where('category', $category));
+        assertType('$this(CustomEloquentBuilder\CustomEloquentBuilder<TModel of CustomEloquentBuilder\ModelWithCustomBuilder (class CustomEloquentBuilder\CustomEloquentBuilder, argument)>)', $this->where('category', $category));
 
         return $this->where('category', $category);
     }
@@ -113,7 +113,7 @@ class CustomEloquentBuilder extends Builder
     /** @phpstan-return CustomEloquentBuilder<ModelWithCustomBuilder> */
     public function type(string $type): CustomEloquentBuilder
     {
-        assertType('static(CustomEloquentBuilder\CustomEloquentBuilder<TModelClass of CustomEloquentBuilder\ModelWithCustomBuilder (class CustomEloquentBuilder\CustomEloquentBuilder, argument)>)', $this->where(['type' => $type]));
+        assertType('$this(CustomEloquentBuilder\CustomEloquentBuilder<TModel of CustomEloquentBuilder\ModelWithCustomBuilder (class CustomEloquentBuilder\CustomEloquentBuilder, argument)>)', $this->where(['type' => $type]));
 
         return $this->where(['type' => $type]);
     }
@@ -125,7 +125,7 @@ class CustomEloquentBuilder extends Builder
      */
     public function categories(array $categories): CustomEloquentBuilder
     {
-        assertType('CustomEloquentBuilder\CustomEloquentBuilder<CustomEloquentBuilder\ModelWithCustomBuilder>', $this->whereIn('category', $categories));
+        assertType('$this(CustomEloquentBuilder\CustomEloquentBuilder<TModel of CustomEloquentBuilder\ModelWithCustomBuilder (class CustomEloquentBuilder\CustomEloquentBuilder, argument)>)', $this->whereIn('category', $categories));
 
         return $this->whereIn('category', $categories);
     }
@@ -158,9 +158,9 @@ class ModelWithCustomBuilderAndDocBlocks extends Model
 }
 
 /**
- * @template TModelClass of ModelWithCustomBuilderAndDocBlocks
+ * @template TModel of ModelWithCustomBuilderAndDocBlocks
  *
- * @extends Builder<TModelClass>
+ * @extends Builder<TModel>
  */
 class CustomBuilder2 extends Builder
 {

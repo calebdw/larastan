@@ -89,7 +89,9 @@ final class ModelFactoryDynamicStaticMethodReturnTypeExtension implements Dynami
             return $factoryClass;
         }
 
-        $factoryClass = Factory::resolveFactoryName(ltrim($model->toCodeString(), '\\')); // @phpstan-ignore-line
+        /** @var class-string<Model> $className */
+        $className   = ltrim($class->toCodeString(), '\\');
+        $factoryName = Factory::resolveFactoryName($className);
 
         if (class_exists($factoryClass)) {
             return $factoryClass;

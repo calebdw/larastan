@@ -40,7 +40,8 @@ class ModelFactoryDynamicStaticMethodReturnTypeExtensionTest extends PHPStanTest
         );
 
         $type = $extension->getTypeFromStaticMethodCall(
-            new DummyMethodReflection('factory'), // @phpstan-ignore-line
+            /** @phpstan-ignore phpstanApi.constructor (not covered by BC promise) */
+            new DummyMethodReflection('factory'),
             new StaticCall(new Name('App\\User'), 'factory', []),
             $scope,
         );
@@ -63,7 +64,8 @@ class ModelFactoryDynamicStaticMethodReturnTypeExtensionTest extends PHPStanTest
         $scope->method('getType')->willReturn($phpstanType);
 
         $type = $extension->getTypeFromStaticMethodCall(
-            new DummyMethodReflection('factory'), // @phpstan-ignore-line
+            /** @phpstan-ignore phpstanApi.constructor (not covered by BC promise) */
+            new DummyMethodReflection('factory'),
             new StaticCall(new Name('App\\User'), 'factory', [new Arg(new LNumber(1))]), // args doesn't matter
             $scope,
         );

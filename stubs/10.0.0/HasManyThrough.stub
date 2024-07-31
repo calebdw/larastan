@@ -53,16 +53,25 @@ class HasManyThrough extends Relation
      *
      * @param  mixed  $id
      * @param  array<int, string>  $columns
-     * @return TRelatedModel|\Illuminate\Database\Eloquent\Collection<int, TRelatedModel>|null
+     * @return ($id is (\Illuminate\Contracts\Support\Arrayable<array-key, mixed>|array<mixed>) ? \Illuminate\Database\Eloquent\Collection<int, TRelatedModel> : TRelatedModel|null)
      */
     public function find($id, $columns = ['*']);
+
+    /**
+     * Find multiple related models by their primary keys.
+     *
+     * @param  \Illuminate\Contracts\Support\Arrayable<array-key, mixed>|int[]  $ids
+     * @param  array<int, mixed>  $columns
+     * @return \Illuminate\Database\Eloquent\Collection<int, TRelatedModel>
+     */
+    public function findMany($ids, $columns = ['*']);
 
     /**
      * Find a related model by its primary key or throw an exception.
      *
      * @param  mixed  $id
      * @param  array<int, string>  $columns
-     * @return TRelatedModel|\Illuminate\Database\Eloquent\Collection<int, TRelatedModel>
+     * @return ($id is (\Illuminate\Contracts\Support\Arrayable<array-key, mixed>|array<mixed>) ? \Illuminate\Database\Eloquent\Collection<int, TRelatedModel> : TRelatedModel)
      */
     public function findOrFail($id, $columns = ['*']);
 
