@@ -20,6 +20,8 @@ Hello! 👋
 This is my fork of [larastan/larastan][larastan], which includes additional features and improvements that have been proposed but are not yet available in the upstream package.
 This fork is intended to provide the community with immediate access to these enhancements while maintaining compatibility with the upstream package.
 
+> For [Laravel Livewire][livewire] support, checkout [larastan-livewire][larastan-livewire]!
+
 ## 🔄 Changes and Upstream PRs
 
 This fork includes the following changes and enhancements:
@@ -33,7 +35,7 @@ This fork includes the following changes and enhancements:
 
 ## ✨ Getting Started
 
-To use this fork, you may use [Composer](https://getcomposer.org) to install it as a development dependency into your Laravel project:
+To use this fork, you may use [Composer][composer] to install it as a development dependency into your Laravel project:
 
 ```bash
 composer require --dev "calebdw/larastan:^2.0"
@@ -57,4 +59,7 @@ Thank you for considering contributing to Larastan. All the contribution guideli
 This fork is open-sourced software licensed under the [MIT license](LICENSE.md).
 
 <!-- links -->
+[composer]: https://getcomposer.org
 [larastan]: https://github.com/larastan/larastan
+[larastan-livewire]: https://github.com/calebdw/larastan-livewire
+[livewire]: https://github.com/livewire/livewire
