@@ -17,12 +17,12 @@
 
 Hello! 👋
 
-This is my fork of [larastan/larastan][larastan], which includes additional features and improvements that have been proposed but are not yet available in the upstream version.
-This version is intended to provide the community with immediate access to these enhancements while maintaining compatibility with the upstream package.
+This is my fork of [larastan/larastan][larastan], which includes additional features and improvements that have been proposed but are not yet available in the upstream package.
+This fork is intended to provide the community with immediate access to these enhancements while maintaining compatibility with the upstream package.
 
 ## 🔄 Changes and Upstream PRs
 
-This fork includes the following changes and enhancements over the upstream version:
+This fork includes the following changes and enhancements:
 
 - [feat: update relation generics](https://github.com/larastan/larastan/pull/1990)
 - [feat: support newFactory method when resolving factory](https://github.com/larastan/larastan/pull/1922)
@@ -39,7 +39,7 @@ To use this fork, you may use [Composer](https://getcomposer.org) to install it 
 composer require --dev "calebdw/larastan:^2.0"
 ```
 
-Or if you already have the upstream version installed, you can point your `composer.json` to this fork:
+Or if you already have the upstream package installed, you can point your `composer.json` to this fork:
 
 ```diff
 - "larastan/larastan": "^2.0"
