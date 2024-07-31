@@ -1,7 +1,8 @@
 {
-    "name": "larastan/larastan",
+    "name": "calebdw/larastan",
     "type": "phpstan-extension",
     "description": "Larastan - Discover bugs in your code without running it. A phpstan/phpstan wrapper for Laravel",
+    "homepage": "https://github.com/calebdw/larastan",
     "keywords": ["laravel", "larastan", "phpstan", "php", "package", "static analysis", "code analysis", "code analyse"],
     "license": "MIT",
     "authors": [
@@ -12,6 +13,10 @@
         {
             "name": "Nuno Maduro",
             "email": "enunomaduro@gmail.com"
+        },
+        {
+            "name": "Caleb White",
+            "email": "cdwhite3@pm.me"
         }
     ],
     "require": {

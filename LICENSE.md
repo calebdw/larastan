@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) Can Vural <can9119@gmail.com>, Nuno Maduro <enunomaduro@gmail.com>,
+Copyright (c) Can Vural <can9119@gmail.com>, Nuno Maduro <enunomaduro@gmail.com>, Caleb White <cdwhite3@pm.me>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
