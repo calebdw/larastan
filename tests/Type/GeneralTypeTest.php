@@ -79,6 +79,7 @@ class GeneralTypeTest extends TypeInferenceTestCase
         }
 
         if (version_compare(LARAVEL_VERSION, '11.0.0', '>=')) {
+            yield from self::gatherAssertTypes(__DIR__ . '/data/helpers-l11.php');
             yield from self::gatherAssertTypes(__DIR__ . '/data/model-properties-l11.php');
         }
 
