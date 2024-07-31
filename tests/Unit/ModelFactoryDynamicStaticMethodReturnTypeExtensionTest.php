@@ -35,7 +35,9 @@ class ModelFactoryDynamicStaticMethodReturnTypeExtensionTest extends PHPStanTest
     public function it_sets_the_is_single_model_flag_to_true_if_no_args_given(): void
     {
         $scope     = $this->createMock(Scope::class);
-        $extension = new ModelFactoryDynamicStaticMethodReturnTypeExtension();
+        $extension = new ModelFactoryDynamicStaticMethodReturnTypeExtension(
+            $this->createReflectionProvider(),
+        );
 
         $type = $extension->getTypeFromStaticMethodCall(
             new DummyMethodReflection('factory'), // @phpstan-ignore-line
@@ -54,7 +56,9 @@ class ModelFactoryDynamicStaticMethodReturnTypeExtensionTest extends PHPStanTest
     public function it_sets_the_is_single_model_flag_correctly(Type $phpstanType, TrinaryLogic $expected): void
     {
         $scope     = $this->createMock(Scope::class);
-        $extension = new ModelFactoryDynamicStaticMethodReturnTypeExtension();
+        $extension = new ModelFactoryDynamicStaticMethodReturnTypeExtension(
+            $this->createReflectionProvider(),
+        );
 
         $scope->method('getType')->willReturn($phpstanType);
 

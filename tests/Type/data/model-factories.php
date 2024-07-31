@@ -55,14 +55,14 @@ function test(?int $foo): void {
     assertType('Database\Factories\UserFactory', User::factory()->afterCreating(fn (User $user) => $user));
     assertType('Database\Factories\Domain\Foo\UserFactory', \App\Domain\Foo\User::factory());
 
-    assertType('Database\Factories\PostFactory', Post::factory());
-    assertType('Database\Factories\PostFactory', Post::factory()->new());
+    assertType('Database\Factories\Post\PostFactory', Post::factory());
+    assertType('Database\Factories\Post\PostFactory', Post::factory()->new());
     assertType('App\Post', Post::factory()->createOne());
     assertType('App\Post', Post::factory()->createOneQuietly());
     assertType('Illuminate\Database\Eloquent\Collection<int, App\Post>', Post::factory()->createMany([]));
     assertType('App\Post', Post::factory()->makeOne());
-    assertType('Database\Factories\PostFactory', Post::factory()->afterMaking(fn (Post $post) => $post));
-    assertType('Database\Factories\PostFactory', Post::factory()->afterCreating(fn (Post $post) => $post));
+    assertType('Database\Factories\Post\PostFactory', Post::factory()->afterMaking(fn (Post $post) => $post));
+    assertType('Database\Factories\Post\PostFactory', Post::factory()->afterCreating(fn (Post $post) => $post));
 
     assertType('App\User|Illuminate\Database\Eloquent\Collection<int, App\User>', User::factory()->count($foo)->create());
     assertType('App\User|Illuminate\Database\Eloquent\Collection<int, App\User>', User::factory()->count($foo)->createQuietly());
