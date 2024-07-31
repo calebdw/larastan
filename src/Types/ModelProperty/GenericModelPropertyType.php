@@ -68,6 +68,10 @@ class GenericModelPropertyType extends StringType
                 return AcceptsResult::createNo();
             }
 
+            if (str_contains($givenString, ' as ')) {
+                $givenString = explode(' as ', $givenString)[0];
+            }
+
             if (str_contains($givenString, '.')) {
                 $tableName    = Str::beforeLast($givenString, '.');
                 $propertyName = Str::afterLast($givenString, '.');
