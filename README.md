@@ -24,7 +24,12 @@ This version is intended to provide the community with immediate access to these
 
 This fork includes the following changes and enhancements over the upstream version:
 
-<!-- - [PR #1234: Feature A](https://github.com/larastan/larastan/pull/1234) Description of improvement. -->
+- [feat: update relation generics](https://github.com/larastan/larastan/pull/1990)
+- [feat: support newFactory method when resolving factory](https://github.com/larastan/larastan/pull/1922)
+- [feat: add support for config array shapes](https://github.com/larastan/larastan/pull/2004)
+- [feat: support multiple database connections](https://github.com/larastan/larastan/pull/1879)
+- [fix: default date casting](https://github.com/larastan/larastan/pull/1842)
+- [fix: handle model property aliases](https://github.com/larastan/larastan/pull/1999)
 
 ## ✨ Getting Started
 
@@ -43,7 +48,7 @@ Or if you already have the upstream version installed, you can point your `compo
 
 For more information on how to configure and use Larastan, please refer to the [official documentation][larastan]
 
-## 👊🏻 Contributing
+## 👊🏻Contributing
 
 Thank you for considering contributing to Larastan. All the contribution guidelines are mentioned [here](CONTRIBUTING.md).
 
