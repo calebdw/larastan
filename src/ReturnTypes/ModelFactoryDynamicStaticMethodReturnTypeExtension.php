@@ -10,6 +10,7 @@ use Larastan\Larastan\Types\Factory\ModelFactoryType;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\TrinaryLogic;
@@ -19,13 +20,15 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\FloatType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\IntersectionType;
+use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 
+use function array_map;
 use function class_exists;
 use function count;
-use function ltrim;
 
 final class ModelFactoryDynamicStaticMethodReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
@@ -51,9 +54,9 @@ final class ModelFactoryDynamicStaticMethodReturnTypeExtension implements Dynami
     ): Type {
         $class = $methodCall->class;
 
-        if (! $class instanceof Name) {
-            return new ErrorType();
-        }
+        $calledOnType = $class instanceof Name
+           ? new ObjectType($scope->resolveName($class))
+           : $scope->getType($class);
 
         if (count($methodCall->getArgs()) === 0) {
             $isSingleModel = TrinaryLogic::createYes();
@@ -72,61 +75,66 @@ final class ModelFactoryDynamicStaticMethodReturnTypeExtension implements Dynami
             $isSingleModel = (new UnionType($numericTypes))->isSuperTypeOf($argType)->negate();
         }
 
-        $factoryClass = $this->getFactoryClass($class, $scope);
+        return TypeCombinator::union(...array_map(
+            function (ClassReflection $classReflection) use ($scope, $isSingleModel) {
+                $factoryReflection = $this->getFactoryReflection($classReflection, $scope);
 
-        if ($factoryClass === null) {
-            return new ErrorType();
-        }
+                if ($factoryReflection === null) {
+                    return new ErrorType();
+                }
 
-        return new ModelFactoryType($factoryClass, null, null, $isSingleModel);
+                return new ModelFactoryType($factoryReflection->getName(), null, $factoryReflection, $isSingleModel);
+            },
+            $calledOnType->getObjectClassReflections(),
+        ));
     }
 
-    private function getFactoryClass(Name $model, Scope $scope): string|null
-    {
-        $factoryClass = $this->getFactoryClassFromNewFactoryMethod($model, $scope);
+    private function getFactoryReflection(
+        ClassReflection $modelReflection,
+        Scope $scope,
+    ): ClassReflection|null {
+        $factoryReflection = $this->getFactoryFromNewFactoryMethod($modelReflection, $scope);
 
-        if ($factoryClass !== null) {
-            return $factoryClass;
+        if ($factoryReflection !== null) {
+            return $factoryReflection;
         }
 
-        /** @var class-string<Model> $className */
-        $className    = ltrim($model->toCodeString(), '\\');
-        $factoryClass = Factory::resolveFactoryName($className);
+        /** @phpstan-ignore argument.type (guaranteed to be model class-string) */
+        $factoryClass = Factory::resolveFactoryName($modelReflection->getName());
 
         if (class_exists($factoryClass)) {
-            return $factoryClass;
+            return $this->reflectionProvider->getClass($factoryClass);
         }
 
         return null;
     }
 
-    private function getFactoryClassFromNewFactoryMethod(Name $model, Scope $scope): string|null
-    {
-        $modelReflection = $this->reflectionProvider->getClass($model->toString());
-
+    private function getFactoryFromNewFactoryMethod(
+        ClassReflection $modelReflection,
+        Scope $scope,
+    ): ClassReflection|null {
         if (! $modelReflection->hasMethod('newFactory')) {
             return null;
         }
 
-        $returnType = $modelReflection->getMethod('newFactory', $scope)
+        $factoryReflections = $modelReflection->getMethod('newFactory', $scope)
             ->getVariants()[0]
-            ->getReturnType();
+            ->getReturnType()
+            ->getObjectClassReflections();
 
-        $factoryClasses = $returnType->getObjectClassNames();
-
-        if (count($factoryClasses) !== 1) {
+        if (count($factoryReflections) !== 1) {
             return null;
         }
 
-        $factoryReflection = $this->reflectionProvider->getClass($factoryClasses[0]);
-
-        if (
-            ! $factoryReflection->isSubclassOf(Factory::class)
-            || $factoryReflection->isAbstract()
-        ) {
-            return null;
+        foreach ($factoryReflections as $factoryReflection) {
+            if (
+                $factoryReflection->isSubclassOf(Factory::class)
+                && ! $factoryReflection->isAbstract()
+            ) {
+                return $factoryReflection;
+            }
         }
 
-        return $factoryReflection->getName();
+        return null;
     }
 }

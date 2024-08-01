@@ -5,6 +5,9 @@ namespace ModelFactories;
 use App\Post;
 use App\User;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use function PHPStan\Testing\assertType;
 
 function test(?int $foo): void {
@@ -74,4 +77,29 @@ function test(?int $foo): void {
 
     assertType('Database\Factories\UserFactory', User::factory()->trashed());
     assertType('*ERROR*', Post::factory()->trashed());
+}
+
+class Comment extends Model
+{
+    use HasFactory;
+
+    /** @return CommentFactory */
+    protected static function newFactory(): Factory
+    {
+        return CommentFactory::new();
+    }
+
+    private function test(): void
+    {
+        assertType('ModelFactories\CommentFactory', static::factory());
+    }
+}
+
+/** @extends Factory<Comment> */
+class CommentFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [];
+    }
 }
