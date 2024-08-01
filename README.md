@@ -20,7 +20,7 @@ Hello! 👋
 This is my fork of [larastan/larastan][larastan], which includes additional features and improvements that have been proposed but are not yet available in the upstream package.
 This fork is intended to provide the community with immediate access to these enhancements while maintaining compatibility with the upstream package.
 
-> For [Laravel Livewire][livewire] support, checkout [larastan-livewire][larastan-livewire]!
+> For [Laravel Livewire][livewire] support, check out [larastan-livewire][larastan-livewire]!
 
 ## 🔄 Changes and Upstream PRs
 
@@ -48,9 +48,16 @@ Or if you already have the upstream package installed, you can point your `compo
 + "calebdw/larastan": "^2.0"
 ```
 
-For more information on how to configure and use Larastan, please refer to the [official documentation][larastan]
+If you have the [PHPStan extension installer](https://phpstan.org/user-guide/extension-library#installing-extensions) installed then nothing more is needed, otherwise you will need to manually include the extension in the `phpstan.neon(.dist)` configuration file:
 
-## 👊🏻Contributing
+```neon
+includes:
+    - ./vendor/calebdw/larastan/extension.neon
+```
+
+For more information on how to configure and use Larastan, please refer to the [official documentation][larastan].
+
+## 👊🏻 Contributing
 
 Thank you for considering contributing to Larastan. All the contribution guidelines are mentioned [here](CONTRIBUTING.md).
 
