@@ -32,6 +32,7 @@ This fork includes the following changes and enhancements:
 - [feat: support multiple database connections](https://github.com/larastan/larastan/pull/1879)
 - [fix: default date casting](https://github.com/larastan/larastan/pull/1842)
 - [fix: handle model property aliases](https://github.com/larastan/larastan/pull/1999)
+- [fix: make TGet covariant on Attribute stub](https://github.com/larastan/larastan/pull/2014)
 
 ## ✨ Getting Started
 
