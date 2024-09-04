@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Larastan\Larastan\Properties;
 
-use PHPStan\File\FileHelper;
+use Larastan\Larastan\Internal\FileHelper;
 use PHPStan\Parser\Parser;
 use PHPStan\Parser\ParserErrorsException;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RegexIterator;
 use SplFileInfo;
 
 use function count;
 use function database_path;
-use function is_dir;
-use function iterator_to_array;
 use function uasort;
 
 class MigrationHelper
@@ -40,7 +35,7 @@ class MigrationHelper
         }
 
         $schemaAggregator = new SchemaAggregator($modelDatabaseHelper);
-        $filesArray       = $this->getMigrationFiles();
+        $filesArray       = $this->fileHelper->getFiles($this->databaseMigrationPath, '/\.php$/i');
 
         if (empty($filesArray)) {
             return;
@@ -57,29 +52,5 @@ class MigrationHelper
                 continue;
             }
         }
-    }
-
-    /** @return SplFileInfo[] */
-    private function getMigrationFiles(): array
-    {
-        /** @var SplFileInfo[] $migrationFiles */
-        $migrationFiles = [];
-
-        foreach ($this->databaseMigrationPath as $additionalPath) {
-            $absolutePath = $this->fileHelper->absolutizePath($additionalPath);
-
-            if (! is_dir($absolutePath)) {
-                continue;
-            }
-
-            $migrationFiles += iterator_to_array(
-                new RegexIterator(
-                    new RecursiveIteratorIterator(new RecursiveDirectoryIterator($absolutePath)),
-                    '/\.php$/i',
-                ),
-            );
-        }
-
-        return $migrationFiles;
     }
 }

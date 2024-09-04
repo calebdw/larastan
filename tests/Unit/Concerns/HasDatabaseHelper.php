@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Concerns;
 
+use Larastan\Larastan\Internal\FileHelper;
 use Larastan\Larastan\Properties\MigrationHelper;
 use Larastan\Larastan\Properties\ModelDatabaseHelper;
 use Larastan\Larastan\Properties\Schema\PhpMyAdminDataTypeToPhpTypeConverter;
 use Larastan\Larastan\Properties\SquashedMigrationHelper;
-use PHPStan\File\FileHelper;
+use PHPStan\File\FileHelper as PHPStanFileHelper;
 use PHPStan\Testing\PHPStanTestCase;
 
 /** @mixin PHPStanTestCase */
@@ -34,7 +35,7 @@ trait HasDatabaseHelper
         return new MigrationHelper(
             self::getContainer()->getService('currentPhpVersionSimpleDirectParser'),
             $dirs,
-            self::getContainer()->getByType(FileHelper::class),
+            new FileHelper(self::getContainer()->getByType(PHPStanFileHelper::class)),
             $disableScan,
         );
     }
@@ -44,7 +45,7 @@ trait HasDatabaseHelper
     {
         return new SquashedMigrationHelper(
             $dirs,
-            self::getContainer()->getByType(FileHelper::class),
+            new FileHelper(self::getContainer()->getByType(PHPStanFileHelper::class)),
             new PhpMyAdminDataTypeToPhpTypeConverter(),
             $disableScan,
         );
