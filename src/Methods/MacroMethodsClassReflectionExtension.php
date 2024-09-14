@@ -71,9 +71,8 @@ class MacroMethodsClassReflectionExtension implements MethodsClassReflectionExte
             }
         } elseif (
             $this->hasIndirectTraitUse($classReflection, Macroable::class) ||
-            $classReflection->getName() === Builder::class ||
-            $classReflection->isSubclassOf(Builder::class) ||
-            $classReflection->getName() === QueryBuilder::class
+            $classReflection->is(Builder::class) ||
+            $classReflection->is(QueryBuilder::class)
         ) {
             $classNames         = [$classReflection->getName()];
             $macroTraitProperty = 'macros';
