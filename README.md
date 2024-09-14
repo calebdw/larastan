@@ -26,13 +26,17 @@ This fork is intended to provide the community with immediate access to these en
 
 This fork includes the following changes and enhancements:
 
-- [feat: update relation generics](https://github.com/larastan/larastan/pull/1990)
+- [feat: update relation generics (support Laravel >= 11.15)](https://github.com/larastan/larastan/pull/1990)
 - [feat: support newFactory method when resolving factory](https://github.com/larastan/larastan/pull/1922)
 - [feat: add support for config array shapes](https://github.com/larastan/larastan/pull/2004)
 - [feat: support multiple database connections](https://github.com/larastan/larastan/pull/1879)
+- [feat: support wildcards in migration/schema paths](https://github.com/larastan/larastan/pull/2031)
 - [fix: default date casting](https://github.com/larastan/larastan/pull/1842)
 - [fix: handle model property aliases](https://github.com/larastan/larastan/pull/1999)
 - [fix: make TGet covariant on Attribute stub](https://github.com/larastan/larastan/pull/2014)
+- [fix: incorrect phpdocs and stubs](https://github.com/larastan/larastan/pull/2028)
+- [fix: properly handle static called on type for query](https://github.com/larastan/larastan/pull/2030)
+- [fix: check if class exists before calling reflectionProvider getClass](https://github.com/larastan/larastan/pull/2037)
 
 ## ✨ Getting Started
 
