@@ -37,6 +37,7 @@ This fork includes the following changes and enhancements:
 - [fix: incorrect phpdocs and stubs](https://github.com/larastan/larastan/pull/2028)
 - [fix: properly handle static called on type for query](https://github.com/larastan/larastan/pull/2030)
 - [fix: check if class exists before calling reflectionProvider getClass](https://github.com/larastan/larastan/pull/2037)
+- [fix: relation class forwarding](https://github.com/larastan/larastan/pull/2042)
 
 ## ✨ Getting Started
 
