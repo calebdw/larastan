@@ -48,6 +48,7 @@ class IntegrationTest extends PHPStanTestCase
                 36 => ['Parameter #1 $columns of method Illuminate\Database\Eloquent\Builder<App\User>::first() expects array<int, model property of App\User>|model property of App\User, string given.'],
                 39 => ['Parameter #1 $column of method Illuminate\Database\Eloquent\Builder<App\User>::where() expects array<int|model property of App\User, mixed>|(Closure(Illuminate\Database\Eloquent\Builder<App\User>): mixed)|Illuminate\Contracts\Database\Query\Expression|model property of App\User, \'roles.foo\' given.'],
                 45 => ['Parameter #1 $column of method Illuminate\Database\Eloquent\Builder<App\FooThread>::where() expects array<int|model property of App\FooThread, mixed>|(Closure(Illuminate\Database\Eloquent\Builder<App\FooThread>): mixed)|Illuminate\Contracts\Database\Query\Expression|model property of App\FooThread, \'private.threads.bar\' given.'],
+                49 => ['Parameter #1 $column of method Illuminate\Database\Eloquent\Builder<App\Account>::where() expects array<int|model property of App\Account, mixed>|(Closure(Illuminate\Database\Eloquent\Builder<App\Account>): mixed)|Illuminate\Contracts\Database\Query\Expression|model property of App\Account, \'foo\' given.'],
             ],
         ];
 

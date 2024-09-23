@@ -27,6 +27,7 @@ This fork is intended to provide the community with immediate access to these en
 This fork includes the following changes and enhancements:
 
 - [feat: update relation generics (support Laravel >= 11.15)](https://github.com/larastan/larastan/pull/1990)
+- [feat: support dynamic relation closures](https://github.com/larastan/larastan/pull/2048)
 - [feat: support newFactory method when resolving factory](https://github.com/larastan/larastan/pull/1922)
 - [feat: add support for config array shapes](https://github.com/larastan/larastan/pull/2004)
 - [feat: support multiple database connections](https://github.com/larastan/larastan/pull/1879)

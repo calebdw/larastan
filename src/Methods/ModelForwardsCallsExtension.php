@@ -17,10 +17,8 @@ use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\Php\DummyParameter;
-use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
-use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\ThisType;
@@ -39,7 +37,6 @@ final class ModelForwardsCallsExtension implements MethodsClassReflectionExtensi
 
     public function __construct(
         private BuilderHelper $builderHelper,
-        private ReflectionProvider $reflectionProvider,
         private EloquentBuilderForwardsCallsExtension $eloquentBuilderForwardsCallsExtension,
     ) {
     }
@@ -84,11 +81,12 @@ final class ModelForwardsCallsExtension implements MethodsClassReflectionExtensi
             return $this->counterMethodReflection($classReflection, $methodName);
         }
 
-        $builderName       = $this->builderHelper->determineBuilderName($classReflection->getName());
-        $builderReflection = $this->reflectionProvider->getClass($builderName)->withTypes([new ObjectType($classReflection->getName())]);
-        $builderType       = $builderReflection->isGeneric()
-            ? new GenericObjectType($builderName, [new ObjectType($classReflection->getName())])
-            : new ObjectType($builderName);
+        $builderType       = $this->builderHelper->getBuilderTypeForModels($classReflection->getName());
+        $builderReflection = $builderType->getClassReflection();
+
+        if ($builderReflection === null) {
+            return null;
+        }
 
         if ($builderReflection->hasNativeMethod($methodName)) {
             $reflection = $builderReflection->getNativeMethod($methodName);
