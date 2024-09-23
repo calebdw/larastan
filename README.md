@@ -35,7 +35,6 @@ This fork includes the following changes and enhancements:
 - [fix: default date casting](https://github.com/larastan/larastan/pull/1842)
 - [fix: handle model property aliases](https://github.com/larastan/larastan/pull/1999)
 - [fix: make TGet covariant on Attribute stub](https://github.com/larastan/larastan/pull/2014)
-- [fix: incorrect phpdocs and stubs](https://github.com/larastan/larastan/pull/2028)
 - [fix: properly handle static called on type for query](https://github.com/larastan/larastan/pull/2030)
 - [fix: check if class exists before calling reflectionProvider getClass](https://github.com/larastan/larastan/pull/2037)
 - [fix: relation class forwarding](https://github.com/larastan/larastan/pull/2042)
