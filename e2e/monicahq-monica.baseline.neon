@@ -6,6 +6,11 @@ parameters:
 			path: ../../e2e/app/Domains/Contact/DavClient/Jobs/UpdateAddressBooks.php
 
 		-
+			message: "#^Parameter \\#1 \\$entry of method App\\\\Domains\\\\Contact\\\\DavClient\\\\Services\\\\Utils\\\\Dav\\\\ServiceUrlQuery\\:\\:getUri\\(\\) expects array, Illuminate\\\\Support\\\\Enumerable\\<int, mixed\\> given\\.$#"
+			count: 1
+			path: ../../e2e/app/Domains/Contact/DavClient/Services/Utils/Dav/ServiceUrlQuery.php
+
+		-
 			message: "#^Parameter \\#1 \\$value of method Illuminate\\\\Support\\\\Collection\\<int,array\\<string, int\\|string\\>\\>\\:\\:prepend\\(\\) expects array\\{id\\: int, name\\: string\\}, array\\{id\\: null, name\\: ''\\} given\\.$#"
 			count: 1
 			path: ../../e2e/app/Domains/Contact/ManageContactImportantDates/Web/ViewHelpers/ContactImportantDatesViewHelper.php
