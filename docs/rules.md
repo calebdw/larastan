@@ -433,3 +433,57 @@ To disable, add the following to your `phpstan.neon` file:
 parameters:
     checkModelAppends: false
 ```
+
+## NoAuthFacadeInRequestScopeRule and NoAuthHelperInRequestScopeRule
+
+These rules will warn you if you are using `Auth::check()`, `Auth::user()`, `Auth::guest()`, `auth()->check()`, `auth()->user()`, or `auth()->guest()` while you have access to the request already in your current scope with `$request` variable. So it should only warn if there is a variable named `$request` in the current scope with `Illuminate\Http\Request` type (or any child class).
+
+### Examples
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class MyController
+{
+    public function __invoke(Request $request)
+    {
+        if (Auth::check()) {
+            //
+        }
+    }
+}
+```
+
+Will result in the following error:
+
+```
+Do not use Auth::check() in a class that has access to the request. Use $request->user() !== null instead.
+```
+
+You can fix this by using the `$request` variable directly:
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class MyController
+{
+    public function __invoke(Request $request)
+    {
+        if ($request->user() !== null) {
+            //
+        }
+    }
+}
+```
+
+### Configuration
+
+This rule is disabled by default.  To enable, add the following to your `phpstan.neon` file:
+
+```neon
+parameters:
+    checkAuthCallsWhenInRequestScope: true
+```
+
