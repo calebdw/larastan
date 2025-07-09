@@ -38,7 +38,9 @@ final class NoUnnecessaryEnumerableToArrayCallsRule implements Rule
     /** @return RuleError[] */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (! $node->name instanceof Identifier || $node->name->toString() !== 'toArray') {
+        $name = $node->name;
+
+        if (! $name instanceof Identifier || $name->toString() !== 'toArray') {
             return [];
         }
 
@@ -60,6 +62,7 @@ final class NoUnnecessaryEnumerableToArrayCallsRule implements Rule
             )
                 ->tip('Use [all()] to get the items as an array.')
                 ->identifier('larastan.unnecessaryEnumerableToArrayCall')
+                ->line($name->getStartLine())
                 ->build(),
         ];
     }
