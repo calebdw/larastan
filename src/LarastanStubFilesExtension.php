@@ -22,7 +22,7 @@ final class LarastanStubFilesExtension implements StubFilesExtension
 
         // Include only applicable versions
         $stubDirectories
-            ->filter(static fn (SplFileInfo $file) => version_compare($file->getFilename(), LARAVEL_VERSION, '<='))
+            ->filter(static fn (SplFileInfo $directory) => version_compare($directory->getFilename(), LARAVEL_VERSION, '<='))
             ->sort(static fn (SplFileInfo $a, SplFileInfo $b) => version_compare($a->getFilename(), $b->getFilename()));
 
         $files = [];

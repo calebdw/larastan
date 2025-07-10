@@ -105,6 +105,10 @@ class GeneralTypeTest extends TypeInferenceTestCase
             yield from self::gatherAssertTypes(__DIR__ . '/data/eloquent-builder-l12-19.php');
         }
 
+        if (laravel_version_compare('12.20.0', '>=')) {
+            yield from self::gatherAssertTypes(__DIR__ . '/data/collection-stubs-l12-20.php');
+        }
+
         //##############################################################################################################
 
         // Console Commands
