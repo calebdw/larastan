@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Larastan\Larastan\Rules\NoEnvCallsOutsideOfConfigRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /** @extends RuleTestCase<NoEnvCallsOutsideOfConfigRule> */
 class NoEnvCallsOutsideOfConfigRuleTest extends RuleTestCase
@@ -22,13 +23,13 @@ class NoEnvCallsOutsideOfConfigRuleTest extends RuleTestCase
         return new NoEnvCallsOutsideOfConfigRule([__DIR__ . '/data/config'], $this->getFileHelper());
     }
 
-    /** @test */
+    #[Test]
     public function itDoesNotFailForEnvCallsInsideConfigDirectory(): void
     {
         $this->analyse([__DIR__ . '/data/config/env-calls.php'], []);
     }
-
-    /** @test */
+ 
+    #[Test]
     public function itReportsEnvCallsOutsideOfConfigDirectory(): void
     {
         $this->analyse([__DIR__ . '/data/env-calls.php'], [
@@ -37,7 +38,7 @@ class NoEnvCallsOutsideOfConfigRuleTest extends RuleTestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function itDoesNotReportTraitFunctionsThatHaveBeenOverridden(): void
     {
         $this->analyse([
@@ -46,7 +47,7 @@ class NoEnvCallsOutsideOfConfigRuleTest extends RuleTestCase
         ], []);
     }
 
-    /** @test */
+    #[Test]
     public function itReportsEnvCallsInTraitRatherThanClass(): void
     {
         $actualErrors = $this->gatherAnalyserErrors([

@@ -8,6 +8,7 @@ use PHPStan\Analyser\Analyser;
 use PHPStan\Analyser\Error;
 use PHPStan\File\FileHelper;
 use PHPStan\Testing\PHPStanTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Throwable;
 
 use function count;
@@ -106,8 +107,9 @@ class IntegrationTest extends PHPStanTestCase
     /**
      * @param array<int, array<int, string>>|null $expectedErrors
      *
-     * @dataProvider dataIntegrationTests
+     * @throws Throwable
      */
+    #[DataProvider('dataIntegrationTests')]
     public function testIntegration(string $file, array|null $expectedErrors = null): void
     {
         $errors = $this->runAnalyse($file);

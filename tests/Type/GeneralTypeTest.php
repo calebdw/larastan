@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Type;
 
 use PHPStan\Testing\TypeInferenceTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function Orchestra\Testbench\laravel_version_compare;
 
@@ -117,7 +118,7 @@ class GeneralTypeTest extends TypeInferenceTestCase
         yield from self::gatherAssertTypes(__DIR__ . '/../application/app/Console/Commands/FooCommand.php');
     }
 
-    /** @dataProvider dataFileAsserts */
+    #[DataProvider('dataFileAsserts')]
     public function testFileAsserts(
         string $assertType,
         string $file,

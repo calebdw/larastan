@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use PHPStan\Testing\PHPStanTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Unit\Concerns\HasDatabaseHelper;
 
 use function array_keys;
 
-/** @covers \Larastan\Larastan\Properties\SquashedMigrationHelper */
+#[CoversClass(SquashedMigrationHelper::class)]
 class SquashedMigrationHelperTest extends PHPStanTestCase
 {
     use HasDatabaseHelper;
 
-    /** @test */
+    #[Test]
     public function it_can_parse_basic_schema_in_different_formats(): void
     {
-        $this->getSquashedMigrationHelper([__DIR__ . '/data/schema/basic_schema'])
+        $this->getSquashedMigrationHelper([__DIR__.'/data/schema/basic_schema'])
             ->parseSchemaDumps($this->modelDatabaseHelper);
 
         $this->assertCount(2, $this->modelDatabaseHelper->connections);
@@ -38,10 +40,10 @@ class SquashedMigrationHelperTest extends PHPStanTestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_will_ignore_if_table_already_exists_in_parsed_tables_array(): void
     {
-        $this->getSquashedMigrationHelper([__DIR__ . '/data/schema/schema_with_create_statements_for_same_table'])
+        $this->getSquashedMigrationHelper([__DIR__.'/data/schema/schema_with_create_statements_for_same_table'])
             ->parseSchemaDumps($this->modelDatabaseHelper);
 
         $this->assertCount(1, $this->modelDatabaseHelper->connections);
@@ -59,10 +61,10 @@ class SquashedMigrationHelperTest extends PHPStanTestCase
         $this->assertSame('string', $tables['accounts']->columns['updated_at']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_schemas_with_different_extensions(): void
     {
-        $this->getSquashedMigrationHelper([__DIR__ . '/data/schema/schema_with_nonstandard_name'])
+        $this->getSquashedMigrationHelper([__DIR__.'/data/schema/schema_with_nonstandard_name'])
             ->parseSchemaDumps($this->modelDatabaseHelper);
 
         $this->assertCount(1, $this->modelDatabaseHelper->connections);
@@ -89,10 +91,10 @@ class SquashedMigrationHelperTest extends PHPStanTestCase
         $this->assertSame('string', $tables['users']->columns['updated_at']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_disable_schema_scanning(): void
     {
-        $this->getSquashedMigrationHelper([__DIR__ . '/data/schema/basic_schema'], true)
+        $this->getSquashedMigrationHelper([__DIR__.'/data/schema/basic_schema'], true)
             ->parseSchemaDumps($this->modelDatabaseHelper);
 
         $this->assertSame([], $this->modelDatabaseHelper->connections);

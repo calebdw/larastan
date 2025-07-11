@@ -7,6 +7,7 @@ namespace Tests\Unit;
 use Larastan\Larastan\Properties\SchemaTable;
 use PHPStan\Testing\PHPStanTestCase;
 use Tests\Unit\Concerns\HasDatabaseHelper;
+use PHPUnit\Framework\Attributes\Test;
 
 use function array_keys;
 
@@ -14,7 +15,7 @@ class MigrationHelperTest extends PHPStanTestCase
 {
     use HasDatabaseHelper;
 
-    /** @test */
+    #[Test]
     public function it_will_return_empty_array_if_migrations_path_is_not_a_directory(): void
     {
         $this->getMigrationHelper(['foobar'])
@@ -23,7 +24,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame([], $this->modelDatabaseHelper->connections);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_read_basic_migrations_and_create_table_structure(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/basic_migration'])
@@ -37,7 +38,7 @@ class MigrationHelperTest extends PHPStanTestCase
         $this->assertUsersTableSchema($tables);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_read_schema_definitions_from_any_method_in_class(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_with_different_methods'])
@@ -51,7 +52,7 @@ class MigrationHelperTest extends PHPStanTestCase
         $this->assertUsersTableSchema($tables);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_read_schema_definitions_with_multiple_create_and_drop_methods_for_one_table(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/complex_migrations'])
@@ -78,7 +79,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('int', $tables['users']->columns['active']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_read_additional_directories(): void
     {
         $this->getMigrationHelper([
@@ -96,7 +97,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertArrayHasKey('teams', $tables);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_use_of_after_method_in_migration(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_using_after_method'])
@@ -118,7 +119,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('string', $tables['users']->columns['updated_at']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_alter_table_and_column_rename(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/rename_migrations'])
@@ -138,7 +139,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('string', $columns['full_name']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_migrations_with_soft_deletes(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_using_soft_deletes'])
@@ -155,7 +156,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('string', $tables['users']->columns['deleted_at']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_migrations_with_soft_deletes_tz(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_using_soft_deletes_tz'])
@@ -172,7 +173,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('string', $tables['users']->columns['deleted_at']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_migrations_with_default_arguments(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migration_with_default_arguments'])
@@ -199,7 +200,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame('string', $tables['users']->columns['custom_soft_deletes']->readableType);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_different_schema_connections(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migration_with_schema_connection'])
@@ -249,7 +250,7 @@ class MigrationHelperTest extends PHPStanTestCase
         $this->assertUsersTableSchema($baz);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_nullable_in_migrations(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_using_nullable'])
@@ -265,7 +266,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame(true, $tables['users']->columns['address1']->nullable);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_migrations_with_array_passed_to_drop_column(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/migrations_using_drop_column'])
@@ -282,7 +283,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame(['id', 'name', 'email', 'created_at', 'updated_at'], array_keys($tables['users']->columns));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_migrations_with_if_statements(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/conditional_migrations'])
@@ -300,7 +301,7 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertArrayHasKey('address2', $tables['users']->columns);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_disable_migration_scanning(): void
     {
         $this->getMigrationHelper([__DIR__ . '/data/basic_migration'], true)
