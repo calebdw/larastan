@@ -28,7 +28,7 @@ class NoEnvCallsOutsideOfConfigRuleTest extends RuleTestCase
     {
         $this->analyse([__DIR__ . '/data/config/env-calls.php'], []);
     }
- 
+
     #[Test]
     public function itReportsEnvCallsOutsideOfConfigDirectory(): void
     {

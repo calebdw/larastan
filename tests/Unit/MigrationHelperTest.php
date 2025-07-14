@@ -6,8 +6,8 @@ namespace Tests\Unit;
 
 use Larastan\Larastan\Properties\SchemaTable;
 use PHPStan\Testing\PHPStanTestCase;
-use Tests\Unit\Concerns\HasDatabaseHelper;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\Unit\Concerns\HasDatabaseHelper;
 
 use function array_keys;
 
