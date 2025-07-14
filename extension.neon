@@ -26,6 +26,8 @@ parameters:
     checkUnusedViews: false
     checkModelAppends: true
     checkAuthCallsWhenInRequestScope: false
+    noModelForwardingToBuilder: false
+    noModelStaticForwardingToBuilder: false
 
 parametersSchema:
     checkOctaneCompatibility: bool()
@@ -45,6 +47,8 @@ parametersSchema:
     checkUnusedViews: bool()
     checkModelAppends: bool()
     checkAuthCallsWhenInRequestScope: bool()
+    noModelForwardingToBuilder: bool()
+    noModelStaticForwardingToBuilder: bool()
 
 conditionalTags:
     Larastan\Larastan\Rules\NoEnvCallsOutsideOfConfigRule:
@@ -65,6 +69,10 @@ conditionalTags:
         phpstan.rules.rule: %checkAuthCallsWhenInRequestScope%
     Larastan\Larastan\Rules\NoAuthHelperInRequestScopeRule:
         phpstan.rules.rule: %checkAuthCallsWhenInRequestScope%
+    Larastan\Larastan\Rules\NoModelForwardingToBuilder:
+        phpstan.rules.rule: %noModelForwardingToBuilder%
+    Larastan\Larastan\Rules\NoModelStaticForwardingToBuilder:
+        phpstan.rules.rule: %noModelStaticForwardingToBuilder%
 
 services:
     -
@@ -621,6 +629,12 @@ services:
 
     -
         class: Larastan\Larastan\Rules\NoAuthHelperInRequestScopeRule
+
+    -
+        class: Larastan\Larastan\Rules\NoModelForwardingToBuilder
+
+    -
+        class: Larastan\Larastan\Rules\NoModelStaticForwardingToBuilder
 
 rules:
     - Larastan\Larastan\Rules\UselessConstructs\NoUselessWithFunctionCallsRule

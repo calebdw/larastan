@@ -27,6 +27,7 @@ This fork is intended to provide the community with immediate access to these en
 
 This fork includes the following changes and enhancements:
 
+- [feat: add optional noModelForwardingToBuilder and noModelStaticForwardingToBuilder](https://github.com/larastan/larastan/pull/2317)
 - [fix: chunkWhile generics](https://github.com/larastan/larastan/pull/2262)
 - [fix: factory {has,for}* methods should return static](https://github.com/larastan/larastan/pull/2252)
 - [fix: property type for uuid and ulid primary keys](https://github.com/larastan/larastan/pull/2197)
