@@ -487,3 +487,61 @@ parameters:
     checkAuthCallsWhenInRequestScope: true
 ```
 
+## NoModelForwardingToBuilder
+
+This rule checks for calling methods on an `Illuminate\Database\Eloquent\Model` instance that are actually forwarded to a Builder instance.
+It helps prevent unexpected behaviors like executing `first()`, `get()` on already fetched models.
+
+### Examples
+
+The following code:
+
+```php
+$post = Post::find(1);
+$post->first();
+```
+
+Will result in the following error:
+
+```
+Method [first] is forwarded to a Builder instance, which is not allowed.
+    💡 Use [::first()], [::query()->first()] or [->newQuery()->first()] instead.
+```
+
+### Configuration
+
+This rule is disabled by default. To enable it, add the following to your `phpstan.neon` file:
+
+```neon
+parameters:
+    noModelForwardingToBuilder: true
+```
+
+## NoModelStaticForwardingToBuilder
+
+This rule checks for calling methods on an `Illuminate\Database\Eloquent\Model` instance that are actually forwarded to a Builder instance.
+It helps prevent hidden coupling and unexpected behaviors by ensuring you explicitly use `::query()` when calling query builder methods on a model.
+
+### Examples
+
+The following code:
+
+```php
+Post::first();
+```
+
+Will result in the following error:
+
+```
+Static method [first] is forwarded to a Builder instance, which is not allowed.
+    💡 Use [::query()->first()] instead.
+```
+
+### Configuration
+
+This rule is disabled by default. To enable it, add the following to your `phpstan.neon` file:
+
+```neon
+parameters:
+    noModelStaticForwardingToBuilder: true
+```
