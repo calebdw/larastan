@@ -320,7 +320,7 @@ function test(
         ->toBase()
     );
     assertType(
-        'Illuminate\Support\Collection<(int|string), mixed>',
+        'Illuminate\Support\Collection<int, mixed>',
         User::query()
         ->whereNull('name')
         ->pluck(\Illuminate\Support\Facades\DB::raw('created_at'))

@@ -574,6 +574,21 @@ services:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
+        class: Larastan\Larastan\ReturnTypes\ArrPluckExtension
+        tags:
+            - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+
+    -
+        class: Larastan\Larastan\ReturnTypes\EloquentBuilderPluckExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: Larastan\Larastan\ReturnTypes\EnumerablePluckExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
         class: Larastan\Larastan\ReturnTypes\LangGetReturnTypeExtension
         tags:
             - phpstan.broker.dynamicStaticMethodReturnTypeExtension
@@ -618,6 +633,9 @@ services:
 
     -
         class: Larastan\Larastan\Support\ConfigHelper
+
+    -
+        class: Larastan\Larastan\Support\PluckHelper
 
     -
         class: Larastan\Larastan\ReturnTypes\FormRequestSafeDynamicMethodReturnTypeExtension
