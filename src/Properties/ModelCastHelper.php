@@ -242,7 +242,7 @@ class ModelCastHelper
     private function getModelCasts(ClassReflection $modelClassReflection): array
     {
         $modelInstance = $this->modelHelper->getModelInstance($modelClassReflection);
-        $modelCasts    = $modelInstance->getCasts();
+        $modelCasts    = $modelInstance?->getCasts() ?? [];
 
         $castsMethodReturnType = $modelClassReflection->getMethod(
             'casts',

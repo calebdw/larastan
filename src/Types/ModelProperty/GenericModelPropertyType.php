@@ -88,7 +88,7 @@ class GenericModelPropertyType extends StringType
                 // or fallback to the default connection
                 $connection = $this->modelHelper
                     ->getModelInstance($modelClass)
-                    ->getConnectionName()
+                    ?->getConnectionName()
                     ?? $this->modelDatabaseHelper->getDefaultConnection();
 
                 if (! isset($this->modelDatabaseHelper->connections[$connection]->tables[$tableName]->columns[$propertyName])) {

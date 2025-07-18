@@ -258,6 +258,10 @@ final class SchemaAggregator
                 /** @phpstan-ignore argument.type (not a class string) */
                 $model = $this->modelHelper->getModelInstance($modelClass);
 
+                if ($model === null) {
+                    continue;
+                }
+
                 $type = $this->modelDatabaseHelper->hasModelColumn($model, $model->getKeyName())
                     ? $this->modelDatabaseHelper->getModelColumn($model, $model->getKeyName())->readableType
                     : 'int';

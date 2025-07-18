@@ -19,6 +19,7 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\TypeCombinator;
 
 use function array_map;
+use function assert;
 use function count;
 use function in_array;
 use function method_exists;
@@ -52,6 +53,10 @@ class ModelPropertyHelper
 
         $modelInstance = $this->modelHelper->getModelInstance($classReflection);
 
+        if ($modelInstance === null) {
+            return false;
+        }
+
         if ($propertyName === $modelInstance->getKeyName()) {
             return true;
         }
@@ -62,6 +67,7 @@ class ModelPropertyHelper
     public function getDatabaseProperty(ClassReflection $classReflection, string $propertyName): ModelProperty
     {
         $modelInstance = $this->modelHelper->getModelInstance($classReflection);
+        assert($modelInstance !== null);
 
         if (
             $propertyName === $modelInstance->getKeyName()

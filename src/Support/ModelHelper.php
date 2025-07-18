@@ -19,10 +19,18 @@ final class ModelHelper
     }
 
     /** @param ClassReflection|class-string<Model> $model */
-    public function getModelInstance(ClassReflection|string $model): Model
+    public function getModelInstance(ClassReflection|string $model): Model|null
     {
         if (is_string($model)) {
+            if (! $this->reflectionProvider->hasClass($model)) {
+                return null;
+            }
+
             $model = $this->reflectionProvider->getClass($model);
+        }
+
+        if ($model->isAbstract()) {
+            return null;
         }
 
         try {
