@@ -206,8 +206,8 @@ function test(?int $value = 0, int|\Closure $intOrClosure = 0, int|\Closure $int
     $var = 'auth.defaults';
     assertType('array{guard: string, passwords: string}|null', config($var));
     assertType('array{guard: string, passwords: string}|null', Config::get('auth.defaults'));
-    assertType('array{auth.defaults: array{guard: string, passwords: string}, auth.guards.web: array{driver: string, provider: string}}', Config::get(['auth.defaults', 'auth.guards.web']));
-    assertType('array{auth.defaults: array{guard: string, passwords: string}, auth.guards.web: array{driver: string, provider: string}}', Config::getMany(['auth.defaults' => 'baz', 'auth.guards.web' => 'foo']));
+    assertType("array{'auth.defaults': array{guard: string, passwords: string}, 'auth.guards.web': array{driver: string, provider: string}}", Config::get(['auth.defaults', 'auth.guards.web']));
+    assertType("array{'auth.defaults': array{guard: string, passwords: string}, 'auth.guards.web': array{driver: string, provider: string}}", Config::getMany(['auth.defaults' => 'baz', 'auth.guards.web' => 'foo']));
     /** @var 'auth.defaults'|'auth.guards.web' $var */
     assertType('array{driver: string, provider: string}|array{guard: string, passwords: string}|null', Config::get($var));
     assertType('array{driver: string, provider: string}|array{guard: string, passwords: string}|null', config($var));
