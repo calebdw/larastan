@@ -1,161 +1,49 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			message: '#^Call to static method fromString\(\) on an unknown class Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
 			count: 1
-			path: ../../e2e/packages/actions/src/Commands/MakeExporterCommand.php
+			path: ../../e2e/packages/panels/src/AvatarProviders/UiAvatarsProvider.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			message: '#^Call to method blue\(\) on an unknown class Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
+			count: 3
+			path: ../../e2e/packages/support/src/Colors/Color.php
+
+		-
+			message: '#^Call to method green\(\) on an unknown class Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
+			count: 3
+			path: ../../e2e/packages/support/src/Colors/Color.php
+
+		-
+			message: '#^Call to method red\(\) on an unknown class Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
+			count: 3
+			path: ../../e2e/packages/support/src/Colors/Color.php
+
+		-
+			message: '#^Call to static method fromString\(\) on an unknown class Spatie\\Color\\Hex\.$#'
+			identifier: class.notFound
 			count: 1
-			path: ../../e2e/packages/actions/src/Commands/MakeImporterCommand.php
+			path: ../../e2e/packages/support/src/Colors/Color.php
 
 		-
-			message: "#^If condition is always true\\.$#"
+			message: '#^Call to static method fromString\(\) on an unknown class Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
 			count: 1
-			path: ../../e2e/packages/actions/src/Exports/Models/Export.php
+			path: ../../e2e/packages/support/src/Colors/Color.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			message: '#^Parameter \$color of method Filament\\Support\\Colors\\Color\:\:generateShades\(\) has invalid type Spatie\\Color\\Rgb\.$#'
+			identifier: class.notFound
 			count: 1
-			path: ../../e2e/packages/actions/src/Exports/Models/Export.php
+			path: ../../e2e/packages/support/src/Colors/Color.php
 
 		-
-			message: "#^If condition is always true\\.$#"
+			message: '#^Call to static method fromString\(\) on an unknown class Spatie\\Color\\Hex\.$#'
+			identifier: class.notFound
 			count: 1
-			path: ../../e2e/packages/actions/src/Imports/Models/Import.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/packages/actions/src/Imports/Models/Import.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Actions\\\\Contracts\\\\HasActions\\:\\:\\$mountedActions\\.$#"
-			count: 2
-			path: ../../e2e/packages/actions/src/Testing/TestsActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Actions\\\\Contracts\\\\HasActions\\:\\:\\$mountedActionsData\\.$#"
-			count: 6
-			path: ../../e2e/packages/actions/src/Testing/TestsActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Actions\\\\Contracts\\\\HasActions\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/actions/src/Testing/TestsActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Actions\\\\Contracts\\\\HasActions\\:\\:getMountedAction\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/actions/src/Testing/TestsActions.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/packages/forms/src/Commands/MakeFormCommand.php
-
-		-
-			message: "#^Parameter \\#2 \\$callback of method Illuminate\\\\Support\\\\Collection\\<string,float\\|string\\|true\\>\\:\\:when\\(\\) expects \\(callable\\(Illuminate\\\\Support\\\\Collection\\<string, float\\|string\\|true\\>, bool\\)\\: Illuminate\\\\Support\\\\Collection\\<string, bool\\|float\\|string\\>\\)\\|null, Closure\\(Illuminate\\\\Support\\\\Collection\\)\\: Illuminate\\\\Support\\\\Collection\\<string, float\\|string\\|true\\> given\\.$#"
-			count: 1
-			path: ../../e2e/packages/forms/src/Components/FileUpload.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:\\$mountedFormComponentActions\\.$#"
-			count: 2
-			path: ../../e2e/packages/forms/src/Testing/TestsComponentActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:\\$mountedFormComponentActionsData\\.$#"
-			count: 6
-			path: ../../e2e/packages/forms/src/Testing/TestsComponentActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:getCachedForms\\(\\)\\.$#"
-			count: 1
-			path: ../../e2e/packages/forms/src/Testing/TestsComponentActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/forms/src/Testing/TestsComponentActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Forms\\\\Contracts\\\\HasForms\\:\\:getMountedFormComponentAction\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/forms/src/Testing/TestsComponentActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Infolists\\\\Contracts\\\\HasInfolists\\:\\:\\$mountedInfolistActions\\.$#"
-			count: 2
-			path: ../../e2e/packages/infolists/src/Testing/TestsActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Infolists\\\\Contracts\\\\HasInfolists\\:\\:\\$mountedInfolistActionsData\\.$#"
-			count: 6
-			path: ../../e2e/packages/infolists/src/Testing/TestsActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Infolists\\\\Contracts\\\\HasInfolists\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/infolists/src/Testing/TestsActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Infolists\\\\Contracts\\\\HasInfolists\\:\\:getMountedInfolistAction\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/infolists/src/Testing/TestsActions.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/packages/panels/src/Commands/MakeResourceCommand.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/packages/panels/src/Http/Middleware/Authenticate.php
-
-		-
-			message: "#^Unable to resolve the template type TMapValue in call to method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),string\\>\\:\\:map\\(\\)$#"
-			count: 1
-			path: ../../e2e/packages/spatie-laravel-tags-plugin/src/Forms/Components/SpatieTagsInput.php
-
-		-
-			message: "#^Cannot call method mapWithKeys\\(\\) on array\\|object\\.$#"
-			count: 1
-			path: ../../e2e/packages/tables/src/Actions/AssociateAction.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:\\$mountedTableActions\\.$#"
-			count: 2
-			path: ../../e2e/packages/tables/src/Testing/TestsActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:\\$mountedTableActionsData\\.$#"
-			count: 6
-			path: ../../e2e/packages/tables/src/Testing/TestsActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/tables/src/Testing/TestsActions.php
-
-		-
-			message: "#^Access to an undefined property Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:\\$mountedTableBulkAction\\.$#"
-			count: 1
-			path: ../../e2e/packages/tables/src/Testing/TestsBulkActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/tables/src/Testing/TestsBulkActions.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/tables/src/Testing/TestsColumns.php
-
-		-
-			message: "#^Call to an undefined method Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:getId\\(\\)\\.$#"
-			count: 2
-			path: ../../e2e/packages/tables/src/Testing/TestsRecords.php
+			path: ../../e2e/packages/support/src/Colors/ColorManager.php

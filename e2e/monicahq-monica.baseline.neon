@@ -1,61 +1,13 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\StatefulGuard\\:\\:getProvider\\(\\)\\.$#"
+			message: '#^PHPDoc type array\<string\>\|bool of property App\\Models\\AddressBookSubscription\:\:\$guarded is not covariant with PHPDoc type array\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$guarded\.$#'
+			identifier: property.phpDocType
 			count: 1
-			path: ../../e2e/app/Actions/Fortify/RedirectIfTwoFactorAuthenticatable.php
+			path: ../../e2e/app/Models/AddressBookSubscription.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			message: '#^PHPDoc type array\<string\>\|bool of property App\\Models\\SyncToken\:\:\$guarded is not covariant with PHPDoc type array\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$guarded\.$#'
+			identifier: property.phpDocType
 			count: 1
-			path: ../../e2e/app/Domains/Contact/Dav/Services/GetEtag.php
-
-		-
-			message: "#^Parameter \\#1 \\$collectionId of method App\\\\Domains\\\\Contact\\\\Dav\\\\Web\\\\Backend\\\\CardDAV\\\\CardDAVBackend\\<TValue of App\\\\Models\\\\Contact\\|null\\>\\:\\:getCurrentSyncToken\\(\\) expects string\\|null, int given\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/Dav/Web/Backend/CardDAV/CardDAVBackend.php
-
-		-
-			message: "#^Parameter \\#1 \\$collectionId of method App\\\\Domains\\\\Contact\\\\Dav\\\\Web\\\\Backend\\\\CardDAV\\\\CardDAVBackend\\<App\\\\Models\\\\Contact\\|null\\>\\:\\:getObject\\(\\) expects string\\|null, int given\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/ManageContact/Dav/ImportContact.php
-
-		-
-			message: "#^Property App\\\\Domains\\\\Contact\\\\Dav\\\\VCardResource\\:\\:\\$vault_id \\(string\\|null\\) does not accept int\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/ManageContact/Services/CopyContactToAnotherVault.php
-
-		-
-			message: "#^Property App\\\\Models\\\\Company\\:\\:\\$vault_id \\(string\\) does not accept int\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/ManageContact/Services/MoveContactToAnotherVault.php
-
-		-
-			message: "#^Parameter \\#1 \\$vaultId of method App\\\\Domains\\\\Contact\\\\ManageContact\\\\Web\\\\Controllers\\\\ContactVCardController\\:\\:exportVCard\\(\\) expects string, int given\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/ManageContact/Web/Controllers/ContactVCardController.php
-
-		-
-			message: "#^Parameter \\#1 \\$address of static method App\\\\Helpers\\\\MapHelper\\:\\:getMapLink\\(\\) expects App\\\\Models\\\\Address, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Contact/ManageContactFeed/Web/ViewHelpers/Actions/ActionFeedAddress.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Vault/ManageVault/Web/ViewHelpers/VaultReminderIndexViewHelper.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: ../../e2e/app/Domains/Vault/ManageVault/Web/ViewHelpers/VaultShowViewHelper.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Contact, App\\\\Models\\\\Vault\\>\\:\\:unsearchable\\(\\)\\.$#"
-			count: 1
-			path: ../../e2e/app/Models/Vault.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Note, App\\\\Models\\\\Contact\\>\\:\\:unsearchable\\(\\)\\.$#"
-			count: 1
-			path: ../../e2e/app/Models/Vault.php
+			path: ../../e2e/app/Models/SyncToken.php
