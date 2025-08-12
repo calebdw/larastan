@@ -139,7 +139,7 @@ class ModelPropertyHelper
 
         $methodReflection = $classReflection->getNativeMethod($camelCase);
 
-        if ($methodReflection->isPublic()) {
+        if ($methodReflection->isPublic() || $methodReflection->isPrivate()) {
             return false;
         }
 
