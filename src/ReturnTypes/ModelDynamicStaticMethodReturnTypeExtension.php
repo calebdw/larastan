@@ -18,6 +18,7 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
+use PHPStan\Type\ThisType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 
@@ -78,8 +79,10 @@ final class ModelDynamicStaticMethodReturnTypeExtension implements DynamicStatic
 
         if (count(array_intersect([EloquentBuilder::class], $returnType->getReferencedClasses())) > 0) {
             if ($methodCall->class instanceof Name) {
+                $type = $scope->resolveTypeByName($methodCall->class);
+
                 return $this->builderHelper->getBuilderTypeForModels(
-                    $scope->resolveTypeByName($methodCall->class),
+                    $type instanceof ThisType ? $type->getStaticObjectType() : $type,
                 );
             }
 
