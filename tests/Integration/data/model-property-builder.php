@@ -43,6 +43,9 @@ function test(Builder $builder, User $user, string $union, ): void
     $user->where('users.id', 1);
     \App\FooThread::query()->where('private.threads.id', 1);
     \App\FooThread::query()->where('private.threads.bar', 'none');
+
+    User::query()->get(DB::raw('name'));
+    User::query()->get([DB::raw('name')]);
 }
 
 User::query()->whereHas('accounts', function (Builder $query) {
