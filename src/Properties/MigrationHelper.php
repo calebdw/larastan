@@ -8,6 +8,7 @@ use Larastan\Larastan\Internal\FileHelper;
 use Larastan\Larastan\Support\ModelHelper;
 use PHPStan\Parser\Parser;
 use PHPStan\Parser\ParserErrorsException;
+use PHPStan\Reflection\ReflectionProvider;
 use SplFileInfo;
 
 use function count;
@@ -23,6 +24,7 @@ class MigrationHelper
         private FileHelper $fileHelper,
         private bool $disableMigrationScan,
         private ModelHelper $modelHelper,
+        private ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -36,7 +38,7 @@ class MigrationHelper
             $this->databaseMigrationPath = [database_path('migrations')];
         }
 
-        $schemaAggregator = new SchemaAggregator($modelDatabaseHelper, $this->modelHelper);
+        $schemaAggregator = new SchemaAggregator($modelDatabaseHelper, $this->modelHelper, $this->reflectionProvider);
         $filesArray       = $this->fileHelper->getFiles($this->databaseMigrationPath, '/\.php$/i');
 
         if (empty($filesArray)) {

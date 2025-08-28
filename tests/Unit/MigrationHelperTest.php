@@ -310,6 +310,22 @@ class MigrationHelperTest extends PHPStanTestCase
         self::assertSame([], $this->modelDatabaseHelper->connections);
     }
 
+    #[Test]
+    public function it_can_handle_migrations_with_const_as_table(): void
+    {
+        $this->getMigrationHelper([__DIR__ . '/data/migration_with_const'])
+            ->parseMigrations($this->modelDatabaseHelper);
+
+        self::assertCount(1, $this->modelDatabaseHelper->connections);
+        self::assertArrayHasKey($this->defaultConnection, $this->modelDatabaseHelper->connections);
+
+        $tables = $this->modelDatabaseHelper->connections[$this->defaultConnection]->tables;
+
+        self::assertArrayHasKey('id', $tables['users']->columns);
+        self::assertArrayHasKey('name', $tables['users']->columns);
+        self::assertArrayHasKey('email', $tables['users']->columns);
+    }
+
     /** @param  array<string, SchemaTable> $tables */
     private function assertUsersTableSchema(array $tables): void
     {

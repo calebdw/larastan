@@ -43,6 +43,7 @@ trait HasDatabaseHelper
             ),
             $disableScan,
             $this->modelHelper,
+            self::createReflectionProvider(),
         );
     }
 
