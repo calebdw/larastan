@@ -27,6 +27,7 @@ This fork is intended to provide the community with immediate access to these en
 
 This fork includes the following changes and enhancements:
 
+- [feat: add support for Collection, Builder, and Arr pluck](https://github.com/larastan/larastan/pull/2346)
 - [fix: self::query() for final models](https://github.com/larastan/larastan/pull/2338)
 - [feat: add optional noModelForwardingToBuilder and noModelStaticForwardingToBuilder](https://github.com/larastan/larastan/pull/2317)
 - [fix: factory {has,for}* methods should return static](https://github.com/larastan/larastan/pull/2252)
