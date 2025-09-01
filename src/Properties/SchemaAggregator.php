@@ -7,9 +7,9 @@ namespace Larastan\Larastan\Properties;
 use Exception;
 use Illuminate\Support\Str;
 use Larastan\Larastan\Support\ModelHelper;
-use PHPStan\Reflection\ReflectionProvider;
 use PhpParser;
 use PhpParser\NodeFinder;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
 
 use function array_key_exists;
