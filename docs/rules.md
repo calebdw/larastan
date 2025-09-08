@@ -362,6 +362,44 @@ parameters:
 - `@includeWhen` Blade directive.
 - `@includeFirst` Blade directive.
 
+## NoMissingTranslationsRule
+
+This rule will find any untranslated strings in your application. It is primarily meant for applications that make use of the dot syntax like `messages.greet`. If you're using translation strings as keys, this rule may be unnecessary. Enabling this rule may decrease performance as it will scan the available views and translations.
+
+> **NOTE**: If you store your translations in a database, this rule will not be able to detect them. You should leave this rule disabled in such cases.
+
+### Examples
+
+For the following code:
+```php
+__('messages.greet')
+```
+
+Larastan may report the following error:
+```
+Translation "messages.greet" has not been found.
+```
+
+### Configuration
+
+This rule is disabled by default.
+To enable, add the following to your `phpstan.neon` file:
+
+```neon
+parameters:
+    checkMissingTranslations: true
+```
+
+By default, the path `resources/lang` is scanned. If you have translations elsewhere, make sure to register all the paths.
+
+```neon
+parameters:
+    checkMissingTranslations: true
+    translationDirectories:
+        - resources/lang
+        - resources/translations
+```
+
 ## NoEnvCallsOutsideOfConfig
 
 Checks for `env` calls outside the `config` directory, which return `null` when the config is cached.

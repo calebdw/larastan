@@ -22,8 +22,10 @@ parameters:
     disableSchemaScan: false
     configDirectories: []
     viewDirectories: []
+    translationDirectories: []
     checkModelProperties: false
     checkUnusedViews: false
+    checkMissingTranslations: false
     checkModelAppends: true
     checkAuthCallsWhenInRequestScope: false
     noModelForwardingToBuilder: false
@@ -41,10 +43,12 @@ parametersSchema:
     disableMigrationScan: bool()
     configDirectories: listOf(string())
     viewDirectories: listOf(string())
+    translationDirectories: listOf(string())
     squashedMigrationsPath: listOf(string())
     disableSchemaScan: bool()
     checkModelProperties: bool()
     checkUnusedViews: bool()
+    checkMissingTranslations: bool()
     checkModelAppends: bool()
     checkAuthCallsWhenInRequestScope: bool()
     noModelForwardingToBuilder: bool()
@@ -63,6 +67,8 @@ conditionalTags:
         phpstan.rules.rule: %checkOctaneCompatibility%
     Larastan\Larastan\Rules\UnusedViewsRule:
         phpstan.rules.rule: %checkUnusedViews%
+    Larastan\Larastan\Rules\NoMissingTranslationsRule:
+        phpstan.rules.rule: %checkMissingTranslations%
     Larastan\Larastan\Rules\ModelAppendsRule:
         phpstan.rules.rule: %checkModelAppends%
     Larastan\Larastan\Rules\NoAuthFacadeInRequestScopeRule:
@@ -531,12 +537,39 @@ services:
             - phpstan.collector
     -
         class: Larastan\Larastan\Collectors\UsedViewInAnotherViewCollector
-        arguments:
-            parser: @currentPhpVersionSimpleDirectParser
+
     -
         class: Larastan\Larastan\Support\ViewFileHelper
         arguments:
             viewDirectories: %viewDirectories%
+
+    -
+        class: Larastan\Larastan\Support\ViewParser
+        arguments:
+            parser: @currentPhpVersionSimpleDirectParser
+
+    -
+        class: Larastan\Larastan\Rules\NoMissingTranslationsRule
+        arguments:
+            translationDirectories: %translationDirectories%
+
+    -
+        class: Larastan\Larastan\Collectors\UsedTranslationFunctionCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: Larastan\Larastan\Collectors\UsedTranslationTranslatorCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: Larastan\Larastan\Collectors\UsedTranslationFacadeCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: Larastan\Larastan\Collectors\UsedTranslationViewCollector
 
     -
         class: Larastan\Larastan\ReturnTypes\ApplicationMakeDynamicReturnTypeExtension
@@ -653,6 +686,9 @@ services:
 
     -
         class: Larastan\Larastan\Rules\NoModelStaticForwardingToBuilder
+
+    -
+        class: Illuminate\Filesystem\Filesystem
 
 rules:
     - Larastan\Larastan\Rules\UselessConstructs\NoUselessWithFunctionCallsRule
