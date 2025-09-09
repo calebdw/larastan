@@ -27,6 +27,7 @@ parameters:
     checkUnusedViews: false
     checkMissingTranslations: false
     checkModelAppends: true
+    checkModelMethodVisibility: false
     checkAuthCallsWhenInRequestScope: false
     noModelForwardingToBuilder: false
     noModelStaticForwardingToBuilder: false
@@ -50,6 +51,7 @@ parametersSchema:
     checkUnusedViews: bool()
     checkMissingTranslations: bool()
     checkModelAppends: bool()
+    checkModelMethodVisibility: bool()
     checkAuthCallsWhenInRequestScope: bool()
     noModelForwardingToBuilder: bool()
     noModelStaticForwardingToBuilder: bool()
@@ -71,6 +73,8 @@ conditionalTags:
         phpstan.rules.rule: %checkMissingTranslations%
     Larastan\Larastan\Rules\ModelAppendsRule:
         phpstan.rules.rule: %checkModelAppends%
+    Larastan\Larastan\Rules\NoPublicModelScopeAndAccessorRule:
+        phpstan.rules.rule: %checkModelMethodVisibility%
     Larastan\Larastan\Rules\NoAuthFacadeInRequestScopeRule:
         phpstan.rules.rule: %checkAuthCallsWhenInRequestScope%
     Larastan\Larastan\Rules\NoAuthHelperInRequestScopeRule:
@@ -417,6 +421,9 @@ services:
 
     -
         class: Larastan\Larastan\Rules\ModelAppendsRule
+
+    -
+        class: Larastan\Larastan\Rules\NoPublicModelScopeAndAccessorRule
 
     -
         class: Larastan\Larastan\Types\GenericEloquentBuilderTypeNodeResolverExtension

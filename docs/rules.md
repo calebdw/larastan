@@ -472,6 +472,71 @@ parameters:
     checkModelAppends: false
 ```
 
+## NoPublicModelScopeAndAccessorRule
+
+Ensures Eloquent model local query scopes and attribute accessors are not part of the public API. 
+Local scopes and attribute accessors should be declared `protected`.
+
+### Examples
+
+Public local scope method:
+
+```php
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    // ❌ Should be protected
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('active', true);
+    }
+}
+```
+
+Will result in the following error:
+
+```
+Local query scope method 'scopeActive' should be declared as protected.
+```
+
+Public accessor returning `Attribute`:
+
+```php
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    // ❌ Should be protected
+    public function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => $attributes['first_name'].' '.$attributes['last_name'],
+        );
+    }
+}
+```
+
+Will result in the following error:
+
+```
+Model accessor method 'fullName' should be declared as protected.
+```
+
+Fix by changing the visibility to `protected` in both cases.
+
+### Configuration
+
+This rule is disabled by default.
+To enable, add the following to your `phpstan.neon` file:
+
+```neon
+parameters:
+    checkModelMethodVisibility: true
+```
+
 ## NoAuthFacadeInRequestScopeRule and NoAuthHelperInRequestScopeRule
 
 These rules will warn you if you are using `Auth::check()`, `Auth::user()`, `Auth::guest()`, `auth()->check()`, `auth()->user()`, or `auth()->guest()` while you have access to the request already in your current scope with `$request` variable. So it should only warn if there is a variable named `$request` in the current scope with `Illuminate\Http\Request` type (or any child class).
