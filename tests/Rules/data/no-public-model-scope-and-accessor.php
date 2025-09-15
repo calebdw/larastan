@@ -86,3 +86,15 @@ class NonModelClass
         );
     }
 }
+
+class ChildModel extends TestModel
+{
+    /**
+     * @param Builder<TestModel> $query
+     * @return Builder<TestModel>
+     */
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('public', true);
+    }
+}

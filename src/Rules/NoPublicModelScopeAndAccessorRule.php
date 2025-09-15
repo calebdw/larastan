@@ -39,6 +39,12 @@ class NoPublicModelScopeAndAccessorRule implements Rule
             return [];
         }
 
+        $parentClass = $node->getClassReflection()->getParentClass();
+
+        if ($parentClass !== null && $parentClass->hasNativeMethod($node->getMethodReflection()->getName())) {
+            return [];
+        }
+
         if ($this->isScopeMethod($node)) {
             if (! $node->getOriginalNode()->isProtected()) {
                 return [
