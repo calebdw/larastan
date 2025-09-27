@@ -150,9 +150,9 @@ final class PluckHelper
         }
 
         foreach ($keys as $key) {
-            if (! $from->hasProperty($key)->no()) {
+            if (! $from->hasInstanceProperty($key)->no()) {
                 try {
-                    $from = $from->getProperty($key, $scope)->getReadableType();
+                    $from = $from->getInstanceProperty($key, $scope)->getReadableType();
 
                     continue;
                 } catch (Throwable) {

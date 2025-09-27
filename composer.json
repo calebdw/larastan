@@ -30,7 +30,7 @@
         "illuminate/pipeline": "^11.42.0 || ^12.4.1",
         "illuminate/support": "^11.42.0 || ^12.4.1",
         "phpmyadmin/sql-parser": "^5.9.0",
-        "phpstan/phpstan": "^2.1.28"
+        "phpstan/phpstan": "^2.1.29"
     },
     "require-dev": {
         "doctrine/coding-standard": "^13.0",

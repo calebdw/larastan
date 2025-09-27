@@ -100,11 +100,11 @@ class GenericModelPropertyType extends StringType
 
             $reasons = [];
 
-            if (! $genericType->hasProperty($givenString)->yes()) {
+            if (! $genericType->hasInstanceProperty($givenString)->yes()) {
                 $reasons[] = sprintf('The given string should be a property of %s, %s given.', $this->type->describe(VerbosityLevel::value()), $givenString);
             }
 
-            return new AcceptsResult($genericType->hasProperty($givenString), $reasons);
+            return new AcceptsResult($genericType->hasInstanceProperty($givenString), $reasons);
         }
 
         if ($type instanceof self) {
@@ -125,7 +125,7 @@ class GenericModelPropertyType extends StringType
         $constantStrings = $type->getConstantStrings();
 
         if (count($constantStrings) === 1) {
-            if (! $this->getGenericType()->hasProperty($constantStrings[0]->getValue())->yes()) {
+            if (! $this->getGenericType()->hasInstanceProperty($constantStrings[0]->getValue())->yes()) {
                 return IsSuperTypeOfResult::createNo();
             }
 
