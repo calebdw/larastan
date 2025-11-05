@@ -9,4 +9,7 @@ $user->paginate();
 $user->where('id', 1);
 $user->take(1);
 $user->max('foo');
+$user->with('foo');
 
+$user->accounts()->first()->first();
+$user->accounts()->first()->with('foo');

@@ -13,6 +13,7 @@ use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
+use PHPStan\Type\TypeCombinator;
 
 use function array_map;
 use function sprintf;
@@ -37,7 +38,7 @@ final class NoModelForwardingToBuilder implements Rule
                 $scope->getType($node->name)->getConstantStrings(),
             );
 
-        $calledOnType = $scope->getType($node->var);
+        $calledOnType = TypeCombinator::removeNull($scope->getType($node->var));
 
         foreach ($calledOnType->getObjectClassReflections() as $classReflection) {
             if (! $classReflection->is(Model::class)) {
@@ -52,7 +53,14 @@ final class NoModelForwardingToBuilder implements Rule
                 $methodReflection = $classReflection->getMethod($method, $scope);
                 $declaringClass   = $methodReflection->getDeclaringClass();
 
-                if (! $declaringClass->is(QueryBuilder::class) && ! $declaringClass->is(EloquentBuilder::class)) {
+                if (
+                    ! $declaringClass->is(QueryBuilder::class)
+                    && ! $declaringClass->is(EloquentBuilder::class)
+                    // Override for the with() method, which is also a static method
+                    // on the Model class, so is not caught by the above check.
+                    // Should not be called on a model instance when this rule is enabled.
+                    && $method !== 'with'
+                ) {
                     continue;
                 }
 

@@ -8,6 +8,8 @@ use Larastan\Larastan\Rules\NoModelForwardingToBuilder;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
+use function strtr;
+
 /** @extends RuleTestCase<NoModelForwardingToBuilder> */
 class NoModelForwardingToBuilderTest extends RuleTestCase
 {
@@ -18,14 +20,22 @@ class NoModelForwardingToBuilderTest extends RuleTestCase
 
     public function testRule(): void
     {
+        $message = static fn (string $name) => strtr(
+            "Method [:name] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [:::name()], [::query()->:name()] or [->newQuery()->:name()] instead.",
+            [':name' => $name],
+        );
+
         $this->analyse([__DIR__ . '/data/NoModelForwardingToBuilderInstance.php'], [
-            ["Method [first] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::first()], [::query()->first()] or [->newQuery()->first()] instead.", 5],
-            ["Method [get] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::get()], [::query()->get()] or [->newQuery()->get()] instead.", 6],
-            ["Method [find] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::find()], [::query()->find()] or [->newQuery()->find()] instead.", 7],
-            ["Method [paginate] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::paginate()], [::query()->paginate()] or [->newQuery()->paginate()] instead.", 8],
-            ["Method [where] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::where()], [::query()->where()] or [->newQuery()->where()] instead.", 9],
-            ["Method [take] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::take()], [::query()->take()] or [->newQuery()->take()] instead.", 10],
-            ["Method [max] is forwarded to a Builder instance, which is not allowed.\n    💡 Use [::max()], [::query()->max()] or [->newQuery()->max()] instead.", 11],
+            [$message('first'), 5],
+            [$message('get'), 6],
+            [$message('find'), 7],
+            [$message('paginate'), 8],
+            [$message('where'), 9],
+            [$message('take'), 10],
+            [$message('max'), 11],
+            [$message('with'), 12],
+            [$message('first'), 14],
+            [$message('with'), 15],
         ]);
     }
 
