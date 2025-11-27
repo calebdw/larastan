@@ -698,6 +698,11 @@ services:
         class: Illuminate\Filesystem\Filesystem
         autowired: self
 
+    -
+        class: Larastan\Larastan\Ignore\FacadeStaticCallIgnoreExtension
+        tags:
+            - phpstan.ignoreErrorExtension
+
 rules:
     - Larastan\Larastan\Rules\UselessConstructs\NoUselessWithFunctionCallsRule
     - Larastan\Larastan\Rules\UselessConstructs\NoUselessValueFunctionCallsRule
