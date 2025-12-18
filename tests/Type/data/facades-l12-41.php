@@ -2,6 +2,7 @@
 
 namespace FacadesL1241;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 use function PHPStan\Testing\assertType;
@@ -24,4 +25,14 @@ function test(): void
     assertType('Illuminate\Http\Client\Promises\LazyPromise', Http::timeout(30)->async()->get('https://example.test'));
     assertType('Illuminate\Http\Client\Promises\LazyPromise', Http::withHeaders(['X-Foo' => 'bar'])->async()->post('https://example.test'));
 
+    assertType('Illuminate\Contracts\Cache\Repository', Cache::driver());
+    assertType('\'123\'', Cache::remember(
+        key: 'cache-key',
+        ttl: 60,
+        callback: static fn (): string => '123',
+    ));
+    assertType('123', Cache::rememberForever(
+        key: 'cache-key',
+        callback: static fn (): int => 123,
+    ));
 }
