@@ -29,7 +29,6 @@ use function str_starts_with;
 use function substr;
 use function Termwind\render;
 use function Termwind\renderUsing;
-use function Termwind\withoutColor;
 use function trim;
 
 use const ENT_QUOTES;
@@ -58,10 +57,6 @@ final class BootstrapErrorHandler
 
         $decorated = $errorOutput->isDecorated();
 
-        if (! $decorated && function_exists('Termwind\\withoutColor')) {
-            withoutColor();
-        }
-
         if ($decorated && $this->renderWithCollision($throwable, $errorOutput)) {
             return;
         }
@@ -79,8 +74,8 @@ final class BootstrapErrorHandler
 
         try {
             $message = $isUserCodeError
-                ? $this->formatUserCodeError($throwable, includeErrorDetails: false, decorated: true)
-                : $this->formatFrameworkError($throwable, includeErrorDetails: false, decorated: true);
+                ? $this->formatUserCodeError($throwable, includeErrorDetails: false)
+                : $this->formatFrameworkError($throwable, includeErrorDetails: false);
 
             $title        = $isUserCodeError ? self::USER_TITLE : self::FRAMEWORK_TITLE;
             $titleClasses = $isUserCodeError ? 'bg-red-500 text-white font-bold' : 'bg-yellow-500 text-black font-bold';

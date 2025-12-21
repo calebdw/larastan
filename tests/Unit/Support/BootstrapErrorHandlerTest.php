@@ -101,7 +101,7 @@ class BootstrapErrorHandlerTest extends TestCase
 
     public function testHandleAnsi(): void
     {
-        $output  = new BufferedOutput();
+        $output = new BufferedOutput();
         $output->setDecorated(true);
         $handler = new BootstrapErrorHandler($output, decorated: true);
 
