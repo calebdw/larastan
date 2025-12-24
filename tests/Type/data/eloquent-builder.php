@@ -276,7 +276,7 @@ function test(
         ->toBase()
     );
     assertType(
-        'object|null',
+        'stdClass|null',
         User::getQuery()
         ->select('some_model.created')
         ->where('some_model.some_column', '=', true)
