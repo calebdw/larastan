@@ -92,7 +92,7 @@ final class PluckHelper
             return null;
         }
 
-        /** @phpstan-ignore phpstanApi.method, phpstanApi.constructor */
+        /** @phpstan-ignore phpstanApi.method, phpstanApi.constructor, arguments.count (ready for phpstan release) */
         $scopeWithContext = $scope->pushInFunctionCall(null, new DummyParameter(
             'callback',
             new CallableType([
@@ -110,7 +110,7 @@ final class PluckHelper
             PassedByReference::createNo(),
             false,
             null,
-        ));
+        ), false);
 
         $callableType = $scopeWithContext->getType($callable);
 
