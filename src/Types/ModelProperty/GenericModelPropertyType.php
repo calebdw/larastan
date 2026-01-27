@@ -193,6 +193,11 @@ class GenericModelPropertyType extends StringType
         return $this->getGenericType()->getReferencedTemplateTypes($variance);
     }
 
+    public function hasTemplateOrLateResolvableType(): bool
+    {
+        return true;
+    }
+
     /** @param  mixed[] $properties */
     public static function __set_state(array $properties): Type
     {
