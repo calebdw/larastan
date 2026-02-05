@@ -1,10 +1,28 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Method App\\Domains\\Contact\\Dav\\Web\\Backend\\CardDAV\\CardDAVBackend\:\:getDeletedObjects\(\) should return Illuminate\\Support\\Collection\<\(int\|string\), App\\Domains\\Contact\\Dav\\VCardResource\> but returns Illuminate\\Support\\Collection\<TKey of \(int\|string\), TValue\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../../e2e/app/Domains/Contact/Dav/Web/Backend/CardDAV/CardDAVBackend.php
+
+		-
+			message: '#^Method App\\Domains\\Contact\\Dav\\Web\\Backend\\CardDAV\\CardDAVBackend\:\:getObjects\(\) should return Illuminate\\Support\\Collection\<\(int\|string\), App\\Domains\\Contact\\Dav\\VCardResource\> but returns Illuminate\\Support\\Collection\<TKey of \(int\|string\), TValue\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../../e2e/app/Domains/Contact/Dav/Web/Backend/CardDAV/CardDAVBackend.php
+
+		-
 			message: '#^PHPDoc type array\<string\>\|bool of property App\\Models\\AddressBookSubscription\:\:\$guarded is not covariant with PHPDoc type array\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$guarded\.$#'
 			identifier: property.phpDocType
 			count: 1
 			path: ../../e2e/app/Models/AddressBookSubscription.php
+
+		-
+			message: '#^PHPDoc type array of property App\\Models\\File\:\:\$dispatchesEvents is not covariant with PHPDoc type array\<string, class\-string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$dispatchesEvents\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: ../../e2e/app/Models/File.php
 
 		-
 			message: '#^PHPDoc type array\<string\>\|bool of property App\\Models\\SyncToken\:\:\$guarded is not covariant with PHPDoc type array\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$guarded\.$#'

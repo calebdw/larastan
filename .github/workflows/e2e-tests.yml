@@ -38,8 +38,8 @@ jobs:
             baseline: canvural-larastan-strict-rules
 
           - repository: filamentphp/filament
-            ref: 8d69f914b70cf0264e6f869d233ac482ae68e992
-            php-version: "8.3"
+            ref: 59ab1677c937231c1324f79aeb4700e4bdf5ea17
+            php-version: "8.4"
             config: filamentphp-filament.neon
             baseline: filamentphp-filament
             force-phpstan-version: true
@@ -85,7 +85,7 @@ jobs:
       - name: "Generate baseline"
         if: ${{ failure() }}
         working-directory: e2e
-        run: composer exec phpstan analyse -- -c ../larastan/e2e/${{ matrix.config }} -b ../larastan/e2e/${{ matrix.baseline }}.baseline.neon
+        run: composer exec phpstan analyse -- -c ../larastan/e2e/${{ matrix.config }} -b ../larastan/e2e/${{ matrix.baseline }}.baseline.neon --allow-empty-baseline
 
       - uses: actions/upload-artifact@v4
         if: ${{ failure() }}
