@@ -45,6 +45,7 @@ final class ViewFileHelper
         $this->viewDirectories = $viewDirectories; // @phpstan-ignore-line
     }
 
+    /** @return Generator<int, string, void, void> */
     public function getRootViewFilePaths(): Generator
     {
         $finder = $this->resolve(ViewFactory::class)->getFinder();
@@ -56,6 +57,7 @@ final class ViewFileHelper
         }
     }
 
+    /** @return Generator<int, string, void, void> */
     public function getAllViewFilePaths(): Generator
     {
         foreach ($this->viewDirectories as $viewDirectory) {
@@ -65,6 +67,7 @@ final class ViewFileHelper
         }
     }
 
+    /** @return Generator<int, string, void, void> */
     public function getAllViewNames(): Generator
     {
         foreach ($this->viewDirectories as $viewDirectory) {
