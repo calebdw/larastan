@@ -93,7 +93,7 @@ final class ApplicationResolver
             return Testbench::create(
                 $config['laravel'],
                 $resolvingCallback,
-                ['enables_package_discoveries' => true, 'extra' => $config->getExtraAttributes()],
+                ['enabled_package_discoveries' => true, 'extra' => $config->getExtraAttributes()],
             );
         }
 
@@ -102,7 +102,7 @@ final class ApplicationResolver
         return Testbench::create(
             null,
             $resolvingCallback,
-            ['enables_package_discoveries' => true],
+            ['enabled_package_discoveries' => true],
         );
     }
 }
