@@ -6,9 +6,9 @@ namespace Larastan\Larastan\Methods;
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Str;
+use Larastan\Larastan\Internal\RecursionGuard;
 use Larastan\Larastan\Reflection\ReflectionHelper;
 use Larastan\Larastan\Reflection\StaticMethodReflection;
-use PHPStan\Analyser\OutOfClassScope;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\MethodsClassReflectionExtension;
@@ -37,59 +37,66 @@ final class FacadesMethodsExtension implements MethodsClassReflectionExtension
             return false;
         }
 
-        if (ReflectionHelper::hasMethodTag($classReflection, $methodName)) {
-            return false;
-        }
-
         $key = $classReflection->getName() . '-' . $methodName;
 
         if (isset($this->cache[$key])) {
             return true;
         }
 
-        $facadeClass = $classReflection->getName();
+        $result = RecursionGuard::run($key, function () use ($classReflection, $methodName, $key) {
+            if (ReflectionHelper::hasMethodTag($classReflection, $methodName)) {
+                return false;
+            }
 
-        $concrete = null;
+            $facadeClass = $classReflection->getName();
 
-        try {
-            $concrete = $facadeClass::getFacadeRoot();
-        } catch (Throwable) {
-        }
+            $concrete = null;
 
-        if ($concrete !== null) {
-            $concreteClass = $concrete::class;
+            try {
+                $concrete = $facadeClass::getFacadeRoot();
+            } catch (Throwable) {
+            }
 
-            if ($this->reflectionProvider->hasClass($concreteClass)) {
-                $concreteReflection = $this->reflectionProvider->getClass($concreteClass);
+            if ($concrete !== null) {
+                $concreteClass = $concrete::class;
 
-                if ($concreteReflection->hasMethod($methodName)) {
-                    $this->cache[$key] = new StaticMethodReflection(
-                        $concreteReflection->getMethod($methodName, new OutOfClassScope()),
-                    );
+                if ($this->reflectionProvider->hasClass($concreteClass)) {
+                    $concreteReflection = $this->reflectionProvider->getClass($concreteClass);
 
-                    return true;
+                    // Use hasNativeMethod() instead of hasMethod() to avoid
+                    // re-entering registered MethodsClassReflectionExtensions
+                    // (including this one), which would cause infinite recursion.
+                    if ($concreteReflection->hasNativeMethod($methodName)) {
+                        $this->cache[$key] = new StaticMethodReflection(
+                            $concreteReflection->getNativeMethod($methodName),
+                        );
+
+                        return true;
+                    }
                 }
             }
-        }
 
-        if (Str::startsWith($methodName, 'assert')) {
-            $fakeFacadeClass = $this->getFake($facadeClass);
+            if (Str::startsWith($methodName, 'assert')) {
+                $fakeFacadeClass = $this->getFake($facadeClass);
 
-            if ($this->reflectionProvider->hasClass($fakeFacadeClass)) {
-                assert(class_exists($fakeFacadeClass));
-                $fakeReflection = $this->reflectionProvider->getClass($fakeFacadeClass);
+                if ($this->reflectionProvider->hasClass($fakeFacadeClass)) {
+                    assert(class_exists($fakeFacadeClass));
+                    $fakeReflection = $this->reflectionProvider->getClass($fakeFacadeClass);
 
-                if ($fakeReflection->hasMethod($methodName)) {
-                    $this->cache[$key] = new StaticMethodReflection(
-                        $fakeReflection->getMethod($methodName, new OutOfClassScope()),
-                    );
+                    if ($fakeReflection->hasNativeMethod($methodName)) {
+                        $this->cache[$key] = new StaticMethodReflection(
+                            $fakeReflection->getNativeMethod($methodName),
+                        );
 
-                    return true;
+                        return true;
+                    }
                 }
             }
-        }
 
-        return false;
+            return false;
+        });
+
+        return $result ?? false;
     }
 
     public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
