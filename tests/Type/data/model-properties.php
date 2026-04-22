@@ -125,7 +125,7 @@ class ModelWithCasts extends Model
     /**
      * @return array{integer: 'bool', string: 'Illuminate\\Database\\Eloquent\\Casts\\AsStringable:argument'}
      */
-    public function casts(): array
+    protected function casts(): array
     {
         $argument = 'argument';
 
