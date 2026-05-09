@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://badge.laravel.cloud/badge/calebdw/larastan" alt="Laravel Compatibility"></a>
   <a href="https://github.com/calebdw/larastan/actions"><img src="https://github.com/calebdw/larastan/actions/workflows/tests.yml/badge.svg" alt="Test Results"></a>
   <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/dt/calebdw/larastan.svg" alt="Total Downloads"></a>
   <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/v/calebdw/larastan.svg" alt="Latest Version"></a>
