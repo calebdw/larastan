@@ -26,7 +26,7 @@ jobs:
       matrix:
         include:
           - repository: monicahq/monica
-            ref: 080fb79c38716496b2888d6daacd1152ca27acf8
+            ref: e08e91734170b6bbd582cb578532c3948196124e
             php-version: "8.3"
             config: monicahq-monica.neon
             baseline: monicahq-monica
