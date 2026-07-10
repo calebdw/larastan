@@ -175,9 +175,9 @@ final class RelationClosureHelper
         }
 
         if ($methodCall instanceof MethodCall) {
-            $calledOnModels = $scope->getType($methodCall->var)
-                ->getTemplateType(EloquentBuilder::class, 'TModel')
-                ->getObjectClassNames();
+            $callerType     = $scope->getType($methodCall->var);
+            $calledOnModels = $callerType->getTemplateType(EloquentBuilder::class, 'TModel')->getObjectClassNames()
+                ?: $callerType->getTemplateType(Relation::class, 'TRelatedModel')->getObjectClassNames();
         } else {
             $calledOnModels = $methodCall->class instanceof Name
                 ? [$scope->resolveName($methodCall->class)]
