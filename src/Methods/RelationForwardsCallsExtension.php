@@ -90,7 +90,7 @@ final class RelationForwardsCallsExtension implements MethodsClassReflectionExte
         $parametersAcceptor = $reflection->getVariants()[0];
         $returnType         = $parametersAcceptor->getReturnType();
 
-        if ((new ObjectType(Builder::class))->isSuperTypeOf($returnType)->yes()) {
+        if (! (new ObjectType(Builder::class))->isSuperTypeOf($returnType)->no()) {
             $returnType = new ThisType($classReflection);
         }
 
