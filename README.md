@@ -28,6 +28,7 @@ This fork is intended to provide the community with immediate access to these en
 
 This fork includes the following changes and enhancements:
 
+- [fix: conditionable calls on relations](https://github.com/larastan/larastan/pull/2510)
 - [fix: mark macro methods as static only if the closure is static](https://github.com/larastan/larastan/pull/2398)
 - [feat: add support for Collection, Builder, and Arr pluck](https://github.com/larastan/larastan/pull/2346)
 - [fix: self::query() for final models](https://github.com/larastan/larastan/pull/2338)
