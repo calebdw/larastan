@@ -54,6 +54,15 @@ function test(FooModel $foo, NonGenericBuilder $nonGenericBuilder): void
     assertType('CustomEloquentBuilder\ModelWithNonGenericBuilder|null', ModelWithNonGenericBuilder::where('email', 'bar')->first());
     assertType('CustomEloquentBuilder\ChildNonGenericBuilder', ModelWithNonGenericBuilder::where('email', 'bar')->orderBy('email'));
     assertType('Illuminate\Database\Eloquent\Collection<int, CustomEloquentBuilder\ModelWithNonGenericBuilder>', ModelWithNonGenericBuilder::get());
+
+    // whereHas/whereDoesntHave closures called on a relation should resolve the closure parameter
+    $foo->customModels()->whereHas('users', function (Builder $query) {
+        assertType('Illuminate\Database\Eloquent\Builder<App\User>', $query);
+    });
+    $foo->customModels()->whereDoesntHave('users', function (Builder $query) {
+        assertType('Illuminate\Database\Eloquent\Builder<App\User>', $query);
+    });
+
 }
 
 /**
