@@ -252,7 +252,13 @@ class ModelCastHelper
                 $modelCasts,
                 array_combine(
                     array_map(static fn ($key) => $key->getValue(), $castsMethodReturnType->getKeyTypes()), // @phpstan-ignore-line
-                    array_map(static fn ($value) => str_replace('\\\\', '\\', $value->getValue()), $castsMethodReturnType->getValueTypes()), // @phpstan-ignore-line
+                    array_map(static function (Type $value) {
+                        if ($value->isConstantValue()->yes()) {
+                            return str_replace('\\\\', '\\', (string) $value->getValue()); // @phpstan-ignore-line
+                        }
+
+                        return $value->describe(VerbosityLevel::value());
+                    }, $castsMethodReturnType->getValueTypes()), // @phpstan-ignore-line
                 ),
             );
         }
