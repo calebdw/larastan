@@ -41,6 +41,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
+use PHPStan\Type\VerbosityLevel;
 use stdClass;
 use Stringable;
 
