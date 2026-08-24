@@ -1,19 +1,3 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/calebdw/larastan/master/docs/logo.png" alt="Larastan Logo" width="300">
-    <br><br>
-    <img src="https://raw.githubusercontent.com/calebdw/larastan/master/docs/example.png" alt="Larastan Example" height="300">
-</p>
-
-<p align="center">
-  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://badge.laravel.cloud/badge/calebdw/larastan" alt="Laravel Compatibility"></a>
-  <a href="https://github.com/calebdw/larastan/actions"><img src="https://github.com/calebdw/larastan/actions/workflows/tests.yml/badge.svg" alt="Test Results"></a>
-  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/dt/calebdw/larastan.svg" alt="Total Downloads"></a>
-  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/v/calebdw/larastan.svg" alt="Latest Version"></a>
-  <a href="https://github.com/calebdw/larastan/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/calebdw/larastan" alt="License"></a>
-</p>
-
-------
-
 > [!IMPORTANT]
 > **This fork has moved to [calebdw/phpstan-laravel][phpstan-laravel].**
 >
@@ -33,6 +17,22 @@
 > and a few names changed to say what they actually do.
 >
 > This fork is no longer maintained and will not be updated.
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/calebdw/larastan/master/docs/logo.png" alt="Larastan Logo" width="300">
+    <br><br>
+    <img src="https://raw.githubusercontent.com/calebdw/larastan/master/docs/example.png" alt="Larastan Example" height="300">
+</p>
+
+<p align="center">
+  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://badge.laravel.cloud/badge/calebdw/larastan" alt="Laravel Compatibility"></a>
+  <a href="https://github.com/calebdw/larastan/actions"><img src="https://github.com/calebdw/larastan/actions/workflows/tests.yml/badge.svg" alt="Test Results"></a>
+  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/dt/calebdw/larastan.svg" alt="Total Downloads"></a>
+  <a href="https://packagist.org/packages/calebdw/larastan"><img src="https://img.shields.io/packagist/v/calebdw/larastan.svg" alt="Latest Version"></a>
+  <a href="https://github.com/calebdw/larastan/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/calebdw/larastan" alt="License"></a>
+</p>
+
+------
 
 ## ⚗️ About This Fork
 
