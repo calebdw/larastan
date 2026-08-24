@@ -14,12 +14,32 @@
 
 ------
 
+> [!IMPORTANT]
+> **This fork has moved to [calebdw/phpstan-laravel][phpstan-laravel].**
+>
+> The work here outgrew what a fork could carry. Living downstream of Larastan
+> meant every change had to stay compatible with it, which ruled out renaming
+> confusing options, dropping old version shims, or reorganising anything.
+> [phpstan-laravel][phpstan-laravel] is the same work as its own package, free
+> to make those decisions, with [documentation][docs] to match.
+>
+> ```bash
+> composer remove --dev calebdw/larastan
+> composer require --dev calebdw/phpstan-laravel
+> ```
+>
+> The [migration guide][migration] covers the rest: options now nest under
+> `laravel:`, error identifiers are prefixed `laravel.` instead of `larastan.`,
+> and a few names changed to say what they actually do.
+>
+> This fork is no longer maintained and will not be updated.
+
 ## ⚗️ About This Fork
 
 Hello! 👋
 
-This is my fork of [larastan/larastan][larastan], which includes additional features and improvements that have been proposed but are not yet available in the upstream package.
-This fork is intended to provide the community with immediate access to these enhancements while maintaining compatibility with the upstream package.
+This was my fork of [larastan/larastan][larastan], carrying features and improvements that had been proposed upstream but were not yet available there.
+It existed to give the community immediate access to those enhancements while staying compatible with the upstream package.
 
 > [!TIP]
 > For [Laravel Livewire][livewire] support, check out [larastan-livewire][larastan-livewire]!
@@ -79,6 +99,9 @@ This fork is open-sourced software licensed under the [MIT license](LICENSE.md).
 
 <!-- links -->
 [composer]: https://getcomposer.org
+[docs]: https://phpstan-laravel.dev
+[migration]: https://phpstan-laravel.dev/latest/migrating-from-larastan/
+[phpstan-laravel]: https://github.com/calebdw/phpstan-laravel
 [larastan]: https://github.com/larastan/larastan
 [larastan-livewire]: https://github.com/calebdw/larastan-livewire
 [livewire]: https://github.com/livewire/livewire
